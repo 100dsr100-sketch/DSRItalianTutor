@@ -1659,6 +1659,7 @@
     clearHighlight();
     cardEl.classList.add('playing');
     enSpeakerEl.classList.add('active');
+    cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     window.speechSynthesis.speak(uttEn);
   }
 
