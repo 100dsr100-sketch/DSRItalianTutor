@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSR's Italian Tutor</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPGRlZnM+CiAgICA8Y2xpcFBhdGggaWQ9InIiPgogICAgICA8cmVjdCB4PSIyIiB5PSIyIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHJ4PSIxMiIvPgogICAgPC9jbGlwUGF0aD4KICA8L2RlZnM+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI3IpIj4KICAgIDxyZWN0IHg9IjIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzAwOEM0NSIvPgogICAgPHJlY3QgeD0iMjIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2MCIgZmlsbD0iI0Y0RjVGMCIvPgogICAgPHJlY3QgeD0iNDIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2MCIgZmlsbD0iI0NEMjEyQSIvPgogIDwvZz4KPC9zdmc+Cg==">
+<meta name="theme-color" content="#123640">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ItalianTutor">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --ink: #16333a;
+    --teal-deep: #123640;
+    --teal: #1c4f5c;
+    --teal-light: #2c6c78;
+    --terracotta: #c9612f;
+    --terracotta-deep: #a94a20;
+    --ceramic-yellow: #e7b23c;
+    --tile-cream: #f1e6cf;
+    --tile-cream-dim: #e4d6b8;
+    --line: rgba(241,230,207,0.16);
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0; padding:0;
+    background: var(--teal-deep);
+    color: var(--tile-cream);
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh;
+  }
+
+  .app{
+    max-width: 640px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Majolica-tile pattern header band */
+  .pattern-strip{
+    height: 10px;
+    width: 100%;
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--terracotta) 0px, var(--terracotta) 10px,
+      var(--ceramic-yellow) 10px, var(--ceramic-yellow) 20px,
+      var(--tile-cream) 20px, var(--tile-cream) 30px
+    );
+    flex-shrink: 0;
+  }
+
+  header{
+    padding: 28px 24px 18px;
+    text-align: left;
+    position: relative;
+  }
+
+  .user-bar{
+    position: absolute;
+    top: 16px;
+    right: 20px;
+  }
+
+  .user-select{
+    background: var(--teal-light);
+    color: var(--tile-cream);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    max-width: 140px;
+  }
+
+  .eyebrow{
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ceramic-yellow);
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.05;
+    margin: 0 0 8px;
+    color: var(--tile-cream);
+  }
+
+  h1 em{
+    font-style: italic;
+    color: var(--terracotta);
+    font-weight: 600;
+  }
+
+  .sub{
+    font-size: 14.5px;
+    color: rgba(241,230,207,0.72);
+    margin: 0;
+    max-width: 46ch;
+    line-height: 1.5;
+  }
+
+  /* Tabs */
+  nav.tabs{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 24px 16px;
+  }
+
+  .tab-btn{
+    flex: 0 0 auto;
+    background: transparent;
+    border: 1.5px solid var(--line);
+    color: rgba(241,230,207,0.75);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+  }
+
+  .tab-btn .dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  .tab-btn:hover{
+    border-color: var(--ceramic-yellow);
+    color: var(--tile-cream);
+  }
+
+  .tab-btn.active{
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: var(--tile-cream);
+  }
+  .tab-btn.active .dot{ opacity: 1; background: var(--ceramic-yellow); }
+
+  .tab-btn .check{
+    color: var(--ceramic-yellow);
+    font-weight: 800;
+  }
+  .tab-btn.active .check{ color: var(--tile-cream); }
+
+  .tab-btn .play-count{
+    color: var(--ceramic-yellow);
+    font-weight: 800;
+    font-size: 11px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 999px;
+    padding: 1px 6px;
+  }
+  .tab-btn.active .play-count{ color: var(--tile-cream); background: rgba(0,0,0,0.2); }
+
+  /* Word list */
+  main{
+    flex: 1;
+    padding: 8px 24px 40px;
+  }
+
+  .category-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 12px 2px 16px;
+    flex-wrap: wrap;
+  }
+
+  .category-title{
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ceramic-yellow);
+    margin: 0;
+  }
+
+  .play-btn{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--terracotta);
+    color: var(--tile-cream);
+    border: none;
+    border-radius: 999px;
+    padding: 9px 16px 9px 14px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.12s ease;
+    flex-shrink: 0;
+  }
+  .play-btn:hover{ background: var(--terracotta-deep); }
+  .play-btn:active{ transform: scale(0.97); }
+  .play-btn.stop-mode{ background: var(--teal-light); border: 1.5px solid var(--ceramic-yellow); }
+  .play-btn svg{ width: 13px; height: 13px; flex-shrink: 0; }
+  .play-btn svg path{ fill: var(--tile-cream); }
+
+  .autoplay-hint{
+    margin: -8px 2px 14px;
+    font-size: 12.5px;
+    color: rgba(241,230,207,0.5);
+  }
+
+  .delay-control{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: -4px 2px 16px;
+    font-size: 12.5px;
+    color: rgba(241,230,207,0.7);
+  }
+
+  .delay-control input[type="range"]{
+    flex: 1;
+    max-width: 160px;
+    accent-color: var(--terracotta);
+  }
+
+  .delay-control .delay-value{
+    min-width: 28px;
+    font-weight: 700;
+    color: var(--ceramic-yellow);
+  }
+
+  .mark-complete-banner{
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(231,178,60,0.15);
+    border: 1px solid var(--ceramic-yellow);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 0 2px 16px;
+    font-size: 13px;
+    color: var(--tile-cream);
+  }
+  .mark-complete-banner.visible{ display: flex; }
+  .mark-complete-actions{ display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .mark-complete-btn{
+    background: var(--ceramic-yellow);
+    color: var(--teal-deep);
+    border: none;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .mark-complete-dismiss{
+    background: transparent;
+    border: none;
+    color: rgba(241,230,207,0.6);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    line-height: 1;
+  }
+
+  ul.word-list{
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  li.word-card{
+    background: var(--teal);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: border-color 0.18s ease, transform 0.12s ease;
+  }
+
+  button.word-btn{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 14px 14px;
+    text-align: left;
+    font-family: 'Manrope', sans-serif;
+    color: var(--tile-cream);
+    border-radius: 10px;
+  }
+
+  button.word-btn:hover{
+    background: rgba(241,230,207,0.05);
+  }
+
+  li.word-card.playing{
+    border-color: var(--ceramic-yellow);
+  }
+
+  .word-text .en{
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+  }
+  .word-text .it{
+    font-size: 16px;
+    color: var(--ceramic-yellow);
+    font-weight: 700;
+    display: block;
+    letter-spacing: 0.01em;
+    overflow: hidden;
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    transition: max-height 0.25s ease, opacity 0.2s ease, margin-top 0.25s ease;
+  }
+
+  li.word-card.revealed .word-text .it{
+    max-height: 44px;
+    margin-top: 2px;
+    opacity: 1;
+  }
+
+  .speaker{
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    transition: background 0.18s ease, transform 0.15s ease;
+  }
+  button.speaker{ cursor: pointer; }
+  button.speaker:hover{ filter: brightness(1.12); }
+
+  /* Each speaker button lights up on its own — not tied to the card's
+     .playing state, so English and Italian can highlight independently. */
+  .speaker.active{
+    background: var(--ceramic-yellow);
+    transform: scale(1.06);
+  }
+  .speaker svg{ width: 17px; height: 17px; }
+  .speaker path, .speaker polygon{ fill: var(--tile-cream); }
+  .speaker.active path,
+  .speaker.active polygon{ fill: var(--teal-deep); }
+
+  footer{
+    padding: 18px 24px 30px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(241,230,207,0.4);
+  }
+
+  .clear-progress-btn{
+    display: block;
+    margin: 10px auto 0;
+    background: transparent;
+    border: 1px solid rgba(241,230,207,0.25);
+    color: rgba(241,230,207,0.55);
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .clear-progress-btn:hover{
+    border-color: var(--terracotta);
+    color: var(--tile-cream);
+  }
+
+  .modal-overlay{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-overlay.visible{ display: flex; }
+  .modal-box{
+    background: var(--teal);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+  }
+  .modal-box h2{
+    font-family: 'Fraunces', serif;
+    color: var(--ceramic-yellow);
+    margin: 0 0 8px;
+    font-size: 22px;
+  }
+  .modal-box p{
+    margin: 0 0 16px;
+    font-size: 13.5px;
+    color: rgba(241,230,207,0.75);
+  }
+  .modal-input{
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--teal-deep);
+    color: var(--tile-cream);
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    margin-bottom: 14px;
+    box-sizing: border-box;
+  }
+  .modal-actions{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  .modal-btn{
+    border: none;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .modal-btn-primary{
+    background: var(--terracotta);
+    color: var(--tile-cream);
+  }
+  .modal-btn-primary:hover{ background: var(--terracotta-deep); }
+  .modal-btn-secondary{
+    background: transparent;
+    border: 1px solid var(--line);
+    color: rgba(241,230,207,0.75);
+  }
+
+  #voice-warning{
+    display: none;
+    margin: 0 24px 10px;
+    padding: 10px 14px;
+    background: rgba(201,97,47,0.18);
+    border: 1px solid var(--terracotta);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--tile-cream);
+  }
+
+  @media (max-width: 420px){
+    h1{ font-size: 32px; }
+    header{ padding: 22px 18px 14px; }
+    nav.tabs{ padding: 4px 18px 14px; }
+    main{ padding: 6px 18px 32px; }
+  }
+
+  #lockScreen {
+    position: fixed; inset: 0;
+    background: var(--teal-deep);
+    color: var(--tile-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    font-family: 'Manrope', sans-serif;
+  }
+  #lockScreen.hidden { display: none; }
+  #lockBox {
+    background: var(--teal);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    width: 260px;
+    text-align: center;
+  }
+  #lockBox input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--teal-deep);
+    color: var(--tile-cream);
+    margin: 12px 0;
+    box-sizing: border-box;
+  }
+  #lockBox button {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 999px;
+    border: none;
+    background: var(--terracotta);
+    color: var(--tile-cream);
+    cursor: pointer;
+    font-weight: 700;
+  }
+  #lockError {
+    color: var(--terracotta);
+    font-size: 12px;
+    min-height: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div id="lockScreen">
+  <div id="lockBox">
+    <div>Enter password</div>
+    <input type="password" id="lockInput" autocomplete="off">
+    <button id="lockBtn">Unlock</button>
+    <div id="lockError"></div>
+  </div>
+</div>
+
+<div class="app">
+  <div class="pattern-strip"></div>
+
+  <header>
+    <div class="user-bar">
+      <select id="user-select" class="user-select"></select>
+    </div>
+    <p class="eyebrow">Parole di ogni giorno</p>
+    <h1>Learn <em>Italian</em>,<br>one tap at a time</h1>
+    <p class="sub">Pick a category, then tap any word to hear it spoken aloud in Italian.</p>
+  </header>
+
+  <div id="voice-warning">
+    Your browser doesn't seem to have an Italian voice installed for speech — words will still show, but audio may fall back to a default voice or stay silent. This works best in Chrome or Edge.
+  </div>
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <main>
+    <div class="category-row">
+      <h2 class="category-title" id="category-title"></h2>
+      <button class="play-btn" id="play-btn"></button>
+    </div>
+    <p class="autoplay-hint" id="autoplay-hint">Plays each word: English, a 3 second pause, then Italian.</p>
+    <div class="delay-control">
+      <label for="delay-slider">Delay</label>
+      <input type="range" id="delay-slider" min="1" max="5" step="1" value="3">
+      <span class="delay-value" id="delay-value">3s</span>
+    </div>
+    <div id="mark-complete-banner" class="mark-complete-banner">
+      <span id="mark-complete-text"></span>
+      <div class="mark-complete-actions">
+        <button id="mark-complete-btn" class="mark-complete-btn">Mark as complete ✓</button>
+        <button id="mark-complete-dismiss" class="mark-complete-dismiss" aria-label="Dismiss">✕</button>
+      </div>
+    </div>
+    <ul class="word-list" id="word-list"></ul>
+  </main>
+
+  <footer>
+    Tap a word to hear it in Italian · buon apprendimento
+    <button id="clear-progress-btn" class="clear-progress-btn">Clear all category progress</button>
+  </footer>
+</div>
+
+<div id="user-modal-overlay" class="modal-overlay">
+  <div class="modal-box">
+    <h2 id="user-modal-title">Who's learning?</h2>
+    <p id="user-modal-sub">Enter a name to track your own progress.</p>
+    <input type="text" id="user-modal-input" class="modal-input" placeholder="Your name" maxlength="24" autocomplete="off">
+    <div class="modal-actions">
+      <button id="user-modal-cancel" class="modal-btn modal-btn-secondary">Cancel</button>
+      <button id="user-modal-submit" class="modal-btn modal-btn-primary">Start</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- access lock ---------------------------------------------------------
+  // NOTE: casual deterrent only (visible in page source), not real security.
+  const ACCESS_PASSWORD = 'DSRChat1';
+  const LOCK_STORAGE_KEY = 'italianTutorUnlocked';
+
+  const lockScreen = document.getElementById('lockScreen');
+  const lockInput = document.getElementById('lockInput');
+  const lockBtn = document.getElementById('lockBtn');
+  const lockError = document.getElementById('lockError');
+
+  function tryUnlock(){
+    if (lockInput.value === ACCESS_PASSWORD){
+      localStorage.setItem(LOCK_STORAGE_KEY, '1');
+      lockScreen.classList.add('hidden');
+    } else {
+      lockError.textContent = 'Incorrect password';
+    }
+  }
+  lockBtn.addEventListener('click', tryUnlock);
+  lockInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlock(); });
+
+  if (localStorage.getItem(LOCK_STORAGE_KEY) === '1'){
+    lockScreen.classList.add('hidden');
+  } else {
+    lockInput.focus();
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js').catch((err) => {
+      console.error('Service worker registration failed', err);
+    });
+  }
+
+  const categories = [
+    {
+      name: "Sleep Time",
+      words: [
+        { en: "To Sleep", it: "Dormire" },
+        { en: "Bed", it: "Letto" },
+        { en: "Rest", it: "Riposo" },
+        { en: "Wake Up", it: "Svegliarsi" },
+        { en: "Tired", it: "Stanco" },
+        { en: "I dream", it: "Io sogno" },
+        { en: "To dream", it: "Sognare" },
+        { en: "Alarm clock", it: "Sveglia" },
+        { en: "Sheets", it: "Lenzuola" },
+        { en: "Mattress", it: "Materasso" },
+        { en: "Nightmare", it: "Incubo" },
+        { en: "I wake up at 8am", it: "Mi sveglio alle 8 di mattina" },
+      ]
+    },
+    {
+      name: "Greetings",
+      words: [
+        { en: "Hello", it: "Ciao" },
+        { en: "Good morning", it: "Buongiorno" },
+        { en: "Good evening", it: "Buonasera" },
+        { en: "Good night", it: "Buonanotte" },
+        { en: "Goodbye", it: "Arrivederci" },
+        { en: "Please", it: "Per favore" },
+        { en: "Thank you", it: "Grazie" },
+        { en: "You're welcome", it: "Prego" },
+        { en: "How are you?", it: "Come stai?" },
+        { en: "I'm fine, thanks", it: "Sto bene, grazie" },
+        { en: "What's your name?", it: "Come ti chiami?" },
+        { en: "My name is...", it: "Mi chiamo..." },
+        { en: "Nice to meet you", it: "Piacere" },
+        { en: "See you soon", it: "A presto" },
+        { en: "See you later", it: "A dopo" },
+        { en: "Yes", it: "Sì" },
+        { en: "No", it: "No" },
+        { en: "Sorry", it: "Mi dispiace" },
+        { en: "Welcome", it: "Benvenuto" },
+        { en: "Good luck", it: "Buona fortuna" },
+        { en: "Where are you from?", it: "Di dove sei?" },
+        { en: "Where is your family from?", it: "Di dove è la tua famiglia?" },
+        { en: "It's a lovely day", it: "È una bella giornata" },
+        { en: "It's such a nice place here", it: "È un posto così bello qui" },
+        { en: "What a lovely place", it: "Che bel posto!" },
+      ]
+    },
+    {
+      name: "Food & Drink",
+      words: [
+        { en: "Water", it: "Acqua" },
+        { en: "Bread", it: "Pane" },
+        { en: "Coffee", it: "Caffè" },
+        { en: "Wine", it: "Vino" },
+        { en: "To Eat", it: "Mangiare" },
+        { en: "Delicious", it: "Delizioso" },
+        { en: "Beer", it: "Birra" },
+        { en: "Orange juice", it: "Succo d'arancia" },
+        { en: "Apple juice", it: "Succo di mela" },
+        { en: "Tea with milk on the side", it: "Tè con il latte a parte" },
+        { en: "A large coffee", it: "Un caffè grande" },
+        { en: "May I have the pizza?", it: "Posso avere la pizza?" },
+        { en: "Menu", it: "Menù" },
+        { en: "Desserts", it: "Dolci" },
+        { en: "Cake", it: "Torta" },
+        { en: "Biscuit", it: "Biscotto" },
+        { en: "Vegetables", it: "Verdure" },
+        { en: "Fish", it: "Pesce" },
+        { en: "Steak", it: "Bistecca" },
+        { en: "No onion", it: "Senza cipolla" },
+        { en: "A diet coke", it: "Una Coca-Cola light" },
+        { en: "A normal coke", it: "Una Coca-Cola normale" },
+        { en: "Coke Zero", it: "Coca-Cola Zero Zuccheri" },
+        { en: "Salmon", it: "Salmone" },
+      ]
+    },
+    {
+      name: "Dining Out",
+      words: [
+        { en: "Table", it: "Tavolo" },
+        { en: "Menu", it: "Menù" },
+        { en: "Waiter", it: "Cameriere" },
+        { en: "Reservation", it: "Prenotazione" },
+        { en: "I would like...", it: "Vorrei..." },
+        { en: "The bill, please", it: "Il conto, per favore" },
+        { en: "Starter", it: "Antipasto" },
+        { en: "Main course", it: "Secondo piatto" },
+        { en: "Dessert", it: "Dolce" },
+        { en: "Napkin", it: "Tovagliolo" },
+        { en: "Fork", it: "Forchetta" },
+        { en: "Knife", it: "Coltello" },
+        { en: "Spoon", it: "Cucchiaio" },
+        { en: "Plate", it: "Piatto" },
+        { en: "Glass", it: "Bicchiere" },
+        { en: "Tasty", it: "Buono" },
+        { en: "Spicy", it: "Piccante" },
+        { en: "Vegetarian", it: "Vegetariano" },
+        { en: "Is this seat free?", it: "È libero questo posto?" },
+        { en: "Cheers!", it: "Salute!" },
+      ]
+    },
+    {
+      name: "Numbers",
+      words: [
+        { en: "One", it: "Uno" },
+        { en: "Two", it: "Due" },
+        { en: "Three", it: "Tre" },
+        { en: "Four", it: "Quattro" },
+        { en: "Five", it: "Cinque" },
+        { en: "Ten", it: "Dieci" },
+        { en: "13", it: "Tredici" },
+        { en: "17", it: "Diciassette" },
+        { en: "22", it: "Ventidue" },
+        { en: "27", it: "Ventisette" },
+        { en: "31", it: "Trentuno" },
+        { en: "38", it: "Trentotto" },
+        { en: "44", it: "Quarantaquattro" },
+        { en: "49", it: "Quarantanove" },
+        { en: "52", it: "Cinquantadue" },
+        { en: "58", it: "Cinquantotto" },
+        { en: "63", it: "Sessantatré" },
+        { en: "67", it: "Sessantasette" },
+        { en: "71", it: "Settantuno" },
+        { en: "76", it: "Settantasei" },
+        { en: "82", it: "Ottantadue" },
+        { en: "89", it: "Ottantanove" },
+        { en: "91", it: "Novantuno" },
+        { en: "95", it: "Novantacinque" },
+        { en: "100", it: "Cento" },
+        { en: "1,000", it: "Mille" },
+        { en: "10,000", it: "Diecimila" },
+        { en: "2016", it: "Duemilasedici" },
+        { en: "2026", it: "Duemilaventisei" },
+      ]
+    },
+    {
+      name: "Family",
+      words: [
+        { en: "Mother", it: "Madre" },
+        { en: "Father", it: "Padre" },
+        { en: "Sister", it: "Sorella" },
+        { en: "Brother", it: "Fratello" },
+        { en: "Friend", it: "Amico" },
+        { en: "Family", it: "Famiglia" },
+        { en: "Cousin", it: "Cugino" },
+        { en: "Aunt", it: "Zia" },
+        { en: "Uncle", it: "Zio" },
+        { en: "Grandmother", it: "Nonna" },
+        { en: "Grandfather", it: "Nonno" },
+        { en: "Relatives", it: "Parenti" },
+        { en: "Siblings", it: "Fratelli" },
+        { en: "Parents", it: "Genitori" },
+        { en: "Father-in-law", it: "Suocero" },
+        { en: "Step-daughter", it: "Figliastra" },
+      ]
+    },
+    {
+      name: "Animals",
+      words: [
+        { en: "Cat", it: "Gatto" },
+        { en: "Dog", it: "Cane" },
+        { en: "Bird", it: "Uccello" },
+        { en: "Mouse", it: "Topo" },
+        { en: "Fish", it: "Pesce" },
+        { en: "Horse", it: "Cavallo" },
+        { en: "Rabbit", it: "Coniglio" },
+        { en: "Cow", it: "Mucca" },
+        { en: "Pat the dog", it: "Accarezzare il cane" },
+        { en: "Brush the cat", it: "Spazzolare il gatto" },
+        { en: "Dog basket", it: "Cuccia del cane" },
+        { en: "Cat basket", it: "Cuccia del gatto" },
+        { en: "Pet store", it: "Negozio di animali" },
+        { en: "Dog lead", it: "Guinzaglio" },
+      ]
+    },
+    {
+      name: "Motels",
+      words: [
+        { en: "Room", it: "Camera" },
+        { en: "Key", it: "Chiave" },
+        { en: "Reception", it: "Reception" },
+        { en: "Suitcase", it: "Valigia" },
+        { en: "Check-in", it: "Registrazione" },
+        { en: "Check-out", it: "Partenza" },
+        { en: "Bathroom", it: "Bagno" },
+        { en: "Towel", it: "Asciugamano" },
+        { en: "Parking", it: "Parcheggio" },
+        { en: "Elevator", it: "Ascensore" },
+        { en: "What time is breakfast?", it: "A che ora è la colazione?" },
+        { en: "What is the wifi password?", it: "Qual è la password del wifi?" },
+        { en: "Reservation", it: "Prenotazione" },
+        { en: "I have a reservation in the name of...", it: "Ho una prenotazione a nome di..." },
+        { en: "For two people, for two nights", it: "Per due persone, per due notti" },
+        { en: "Where is the dining room?", it: "Dov'è la sala da pranzo?" },
+        { en: "The toilet is broken", it: "Il water è rotto" },
+        { en: "The TV is broken", it: "La TV è rotta" },
+      ]
+    },
+    {
+      name: "Travel",
+      words: [
+        { en: "Airport", it: "Aeroporto" },
+        { en: "Train", it: "Treno" },
+        { en: "Ticket", it: "Biglietto" },
+        { en: "Passport", it: "Passaporto" },
+        { en: "Bus", it: "Autobus" },
+        { en: "Taxi", it: "Taxi" },
+        { en: "Luggage", it: "Bagaglio" },
+        { en: "City", it: "Città" },
+        { en: "Journey", it: "Viaggio" },
+        { en: "Map", it: "Mappa" },
+        { en: "Bus station", it: "Stazione degli autobus" },
+        { en: "Train station", it: "Stazione ferroviaria" },
+        { en: "Railway", it: "Ferrovia" },
+        { en: "Cable car", it: "Funivia" },
+        { en: "Departure", it: "Partenza" },
+        { en: "Arrival", it: "Arrivo" },
+        { en: "Flight", it: "Volo" },
+        { en: "Check-in counter", it: "Banco del check-in" },
+        { en: "Checked luggage", it: "Bagaglio da stiva" },
+        { en: "Carry-on luggage", it: "Bagaglio a mano" },
+      ]
+    },
+    {
+      name: "Asking Directions",
+      words: [
+        { en: "Where is...?", it: "Dov'è...?" },
+        { en: "Excuse me", it: "Scusi" },
+        { en: "Left", it: "Sinistra" },
+        { en: "Right", it: "Destra" },
+        { en: "Straight ahead", it: "Sempre dritto" },
+        { en: "Near", it: "Vicino" },
+        { en: "Far", it: "Lontano" },
+        { en: "Street", it: "Strada" },
+        { en: "Turn", it: "Girare" },
+        { en: "Corner", it: "Angolo" },
+        { en: "It is behind", it: "È dietro" },
+        { en: "It is in front of", it: "È davanti" },
+        { en: "It is next to", it: "È accanto a" },
+        { en: "How far is it?", it: "Quanto dista?" },
+        { en: "On foot", it: "A piedi" },
+        { en: "Is there a bus?", it: "C'è un autobus?" },
+        { en: "Is it here?", it: "È qui?" },
+      ]
+    },
+    {
+      name: "Beach",
+      words: [
+        { en: "Beach", it: "Spiaggia" },
+        { en: "Sand", it: "Sabbia" },
+        { en: "Water", it: "Acqua" },
+        { en: "Waves", it: "Onde" },
+        { en: "Swimming", it: "Nuoto" },
+        { en: "Dolphin", it: "Delfino" },
+        { en: "Whale", it: "Balena" },
+        { en: "Splash", it: "Spruzzo" },
+        { en: "Rocks", it: "Rocce" },
+      ]
+    },
+    {
+      name: "Weather",
+      words: [
+        { en: "Rain", it: "Pioggia" },
+        { en: "Rainy", it: "Piovoso" },
+        { en: "Snow", it: "Neve" },
+        { en: "Ice", it: "Ghiaccio" },
+        { en: "Rainbow", it: "Arcobaleno" },
+        { en: "Cloud", it: "Nuvola" },
+        { en: "Clouds", it: "Nuvole" },
+        { en: "Cloudy", it: "Nuvoloso" },
+        { en: "Wind", it: "Vento" },
+        { en: "Windy", it: "Ventoso" },
+        { en: "Storm", it: "Temporale" },
+        { en: "Thunder", it: "Tuono" },
+        { en: "Lightning", it: "Fulmine" },
+        { en: "Frost", it: "Gelo" },
+        { en: "Sun", it: "Sole" },
+        { en: "Sunny", it: "Soleggiato" },
+      ]
+    },
+    {
+      name: "Home",
+      words: [
+        { en: "Upstairs", it: "Al piano di sopra" },
+        { en: "Stairs", it: "Scale" },
+        { en: "Floor", it: "Pavimento" },
+        { en: "Tiles", it: "Piastrelle" },
+        { en: "Kitchen", it: "Cucina" },
+        { en: "Bedroom", it: "Camera da letto" },
+        { en: "Lounge Room", it: "Soggiorno" },
+        { en: "Dining room", it: "Sala da pranzo" },
+        { en: "Balcony", it: "Balcone" },
+        { en: "View", it: "Vista" },
+        { en: "Windows", it: "Finestre" },
+        { en: "Front Door", it: "Porta d'ingresso" },
+        { en: "Garage", it: "Garage" },
+        { en: "Garage door", it: "Porta del garage" },
+        { en: "Roof", it: "Tetto" },
+        { en: "Ceiling", it: "Soffitto" },
+        { en: "Walls", it: "Pareti" },
+        { en: "Mailbox", it: "Cassetta della posta" },
+      ]
+    },
+    {
+      name: "Body",
+      words: [
+        { en: "Eyes", it: "Occhi" },
+        { en: "Ears", it: "Orecchie" },
+        { en: "Body", it: "Corpo" },
+        { en: "Head", it: "Testa" },
+        { en: "Face", it: "Viso" },
+        { en: "Mouth", it: "Bocca" },
+        { en: "Lips", it: "Labbra" },
+        { en: "Eyebrows", it: "Sopracciglia" },
+        { en: "Eyelashes", it: "Ciglia" },
+        { en: "Cheek", it: "Guancia" },
+        { en: "Neck", it: "Collo" },
+        { en: "Throat", it: "Gola" },
+        { en: "Shoulders", it: "Spalle" },
+        { en: "Back", it: "Schiena" },
+        { en: "Arms", it: "Braccia" },
+        { en: "Elbow", it: "Gomito" },
+        { en: "Wrist", it: "Polso" },
+        { en: "Hand", it: "Mano" },
+        { en: "Fingers", it: "Dita" },
+        { en: "Finger nails", it: "Unghie delle mani" },
+        { en: "Stomach", it: "Stomaco" },
+        { en: "Breasts", it: "Seno" },
+        { en: "Penis", it: "Pene" },
+        { en: "Vulva", it: "Vulva" },
+        { en: "Legs", it: "Gambe" },
+        { en: "Knee", it: "Ginocchio" },
+        { en: "Feet", it: "Piedi" },
+        { en: "Toes", it: "Dita dei piedi" },
+        { en: "Toe nails", it: "Unghie dei piedi" },
+      ]
+    },
+    {
+      name: "Medical",
+      words: [
+        { en: "Hospital", it: "Ospedale" },
+        { en: "Nurse", it: "Infermiere" },
+        { en: "Doctor", it: "Dottore" },
+        { en: "Heart", it: "Cuore" },
+        { en: "Lungs", it: "Polmoni" },
+        { en: "Veins", it: "Vene" },
+        { en: "Blood", it: "Sangue" },
+        { en: "Blood pressure", it: "Pressione sanguigna" },
+        { en: "Headache", it: "Mal di testa" },
+        { en: "Stomachache", it: "Mal di stomaco" },
+        { en: "Pain", it: "Dolore" },
+        { en: "Bandage", it: "Benda" },
+        { en: "Saline drip", it: "Flebo" },
+        { en: "Medicine", it: "Medicina" },
+        { en: "Tablet", it: "Compressa" },
+      ]
+    },
+    {
+      name: "Directions",
+      words: [
+        { en: "North", it: "Nord" },
+        { en: "South", it: "Sud" },
+        { en: "East", it: "Est" },
+        { en: "West", it: "Ovest" },
+        { en: "Up", it: "Su" },
+        { en: "Down", it: "Giù" },
+        { en: "Left", it: "Sinistra" },
+        { en: "Right", it: "Destra" },
+        { en: "Over", it: "Sopra" },
+        { en: "Under", it: "Sotto" },
+        { en: "One kilometer", it: "Un chilometro" },
+        { en: "One mile", it: "Un miglio" },
+        { en: "One meter", it: "Un metro" },
+        { en: "One inch", it: "Un pollice" },
+        { en: "One centimeter", it: "Un centimetro" },
+        { en: "One millimeter", it: "Un millimetro" },
+        { en: "Measure", it: "Misurare" },
+        { en: "Very far", it: "Molto lontano" },
+        { en: "Very close", it: "Molto vicino" },
+        { en: "Clockwise", it: "In senso orario" },
+        { en: "Anticlockwise", it: "In senso antiorario" },
+        { en: "To the dock", it: "Al molo" },
+        { en: "To the station", it: "Alla stazione" },
+        { en: "To the airport", it: "All'aeroporto" },
+      ]
+    },
+    {
+      name: "Cars",
+      words: [
+        { en: "Car", it: "Auto" },
+        { en: "Bus", it: "Autobus" },
+        { en: "Truck", it: "Camion" },
+        { en: "To park", it: "Parcheggiare" },
+        { en: "Wheel", it: "Ruota" },
+        { en: "Engine", it: "Motore" },
+        { en: "Petrol", it: "Benzina" },
+        { en: "Diesel", it: "Gasolio" },
+        { en: "Petrol Station", it: "Benzinaio" },
+        { en: "Bonnet", it: "Cofano" },
+        { en: "Steering wheel", it: "Volante" },
+        { en: "Brakes", it: "Freni" },
+        { en: "Suspension", it: "Sospensione" },
+        { en: "Tires", it: "Pneumatici" },
+        { en: "Sedan", it: "Berlina" },
+        { en: "Hatchback", it: "Hatchback" },
+        { en: "Convertible", it: "Decappottabile" },
+        { en: "Dashboard", it: "Cruscotto" },
+      ]
+    },
+    {
+      name: "Transport",
+      words: [
+        { en: "Car", it: "Auto" },
+        { en: "Bicycle", it: "Bicicletta" },
+        { en: "Truck", it: "Camion" },
+        { en: "Ferry", it: "Traghetto" },
+        { en: "Train", it: "Treno" },
+        { en: "Bus", it: "Autobus" },
+        { en: "Boat", it: "Barca" },
+        { en: "Highway", it: "Autostrada" },
+        { en: "Street", it: "Strada" },
+        { en: "Avenue", it: "Viale" },
+        { en: "Parking lot", it: "Parcheggio" },
+        { en: "Parking", it: "Sosta" },
+        { en: "Roundabout", it: "Rotonda" },
+        { en: "Traffic lights", it: "Semaforo" },
+        { en: "Curb", it: "Cordolo" },
+        { en: "Gutter", it: "Cunetta" },
+        { en: "Stop sign", it: "Segnale di stop" },
+        { en: "Give way sign", it: "Segnale di dare precedenza" },
+      ]
+    },
+    {
+      name: "Kitchen",
+      words: [
+        { en: "Stove", it: "Fornello" },
+        { en: "Oven", it: "Forno" },
+        { en: "Toaster", it: "Tostapane" },
+        { en: "Kettle", it: "Bollitore" },
+        { en: "Saucepan", it: "Pentolino" },
+        { en: "Pot", it: "Pentola" },
+        { en: "Sink", it: "Lavello" },
+        { en: "Dishes", it: "Piatti" },
+        { en: "Dishwasher", it: "Lavastoviglie" },
+        { en: "Stir", it: "Mescolare" },
+        { en: "Boil", it: "Bollire" },
+        { en: "Simmer", it: "Sobbollire" },
+        { en: "Roast", it: "Arrostire" },
+        { en: "Bake", it: "Cuocere al forno" },
+        { en: "To Cook", it: "Cucinare" },
+        { en: "A good cook", it: "Un bravo cuoco" },
+        { en: "Very nice taste", it: "Sapore molto buono" },
+        { en: "Spicy", it: "Piccante" },
+        { en: "Bland", it: "Insipido" },
+        { en: "Sour", it: "Agro" },
+        { en: "Sweet", it: "Dolce" },
+        { en: "Acidic", it: "Acido" },
+        { en: "Vinegar", it: "Aceto" },
+        { en: "Eggs", it: "Uova" },
+        { en: "Butter", it: "Burro" },
+        { en: "Flour", it: "Farina" },
+        { en: "Milk", it: "Latte" },
+      ]
+    },
+    {
+      name: "Ingredients",
+      words: [
+        { en: "Fish", it: "Pesce" },
+        { en: "Lamb", it: "Agnello" },
+        { en: "Steak", it: "Bistecca" },
+        { en: "Bacon", it: "Pancetta" },
+        { en: "Eggs", it: "Uova" },
+        { en: "Lettuce", it: "Lattuga" },
+        { en: "Tomato", it: "Pomodoro" },
+        { en: "Carrots", it: "Carote" },
+        { en: "Cheese", it: "Formaggio" },
+        { en: "Potato", it: "Patata" },
+        { en: "Cauliflower", it: "Cavolfiore" },
+        { en: "Broccoli", it: "Broccoli" },
+        { en: "Sweet potato", it: "Patata dolce" },
+        { en: "Salmon", it: "Salmone" },
+        { en: "Herbs", it: "Erbe aromatiche" },
+        { en: "Salt", it: "Sale" },
+        { en: "Pepper", it: "Pepe" },
+        { en: "Lemon", it: "Limone" },
+        { en: "Zest of a lemon", it: "Scorza di limone" },
+        { en: "Sugar", it: "Zucchero" },
+        { en: "Milk", it: "Latte" },
+        { en: "Avocado", it: "Avocado" },
+        { en: "Broccolini", it: "Broccolini" },
+        { en: "Spinach", it: "Spinaci" },
+        { en: "Ham", it: "Prosciutto cotto" },
+        { en: "Bread roll", it: "Panino" },
+        { en: "Sliced bread", it: "Pane a fette" },
+        { en: "White bread", it: "Pane bianco" },
+        { en: "Whole meal bread", it: "Pane integrale" },
+        { en: "Multigrain bread", it: "Pane multicereali" },
+        { en: "Bread wrap", it: "Piadina" },
+      ]
+    },
+    {
+      name: "Colours",
+      words: [
+        { en: "Black", it: "Nero" },
+        { en: "White", it: "Bianco" },
+        { en: "Red", it: "Rosso" },
+        { en: "Blue", it: "Blu" },
+        { en: "Green", it: "Verde" },
+        { en: "Brown", it: "Marrone" },
+        { en: "Pink", it: "Rosa" },
+        { en: "Lime", it: "Verde lime" },
+        { en: "Violet", it: "Violetto" },
+        { en: "Purple", it: "Viola" },
+        { en: "Dark", it: "Scuro" },
+        { en: "Light", it: "Chiaro" },
+        { en: "Grey", it: "Grigio" },
+        { en: "Light blue", it: "Azzurro" },
+        { en: "Gold", it: "Oro" },
+        { en: "Silver", it: "Argento" },
+        { en: "Jade", it: "Giada" },
+        { en: "Teal", it: "Verde acqua" },
+        { en: "Lavender", it: "Lavanda" },
+        { en: "Maroon", it: "Bordeaux" },
+        { en: "Olive", it: "Verde oliva" },
+        { en: "Navy", it: "Blu marino" },
+        { en: "Beige", it: "Beige" },
+      ]
+    },
+    {
+      name: "Money",
+      words: [
+        { en: "Cash", it: "Contanti" },
+        { en: "Coins", it: "Monete" },
+        { en: "Cash register", it: "Cassa" },
+        { en: "Notes", it: "Banconote" },
+        { en: "Euro", it: "Euro" },
+        { en: "Price", it: "Prezzo" },
+        { en: "Cost", it: "Costo" },
+        { en: "Discount", it: "Sconto" },
+        { en: "Tax", it: "Tassa" },
+        { en: "Free", it: "Gratis" },
+        { en: "May I pay here?", it: "Posso pagare qui?" },
+        { en: "May I pay by credit card?", it: "Posso pagare con la carta di credito?" },
+        { en: "What is the total?", it: "Qual è il totale?" },
+        { en: "May I have the bill?", it: "Posso avere il conto?" },
+        { en: "Do you have a bag?", it: "Avete un sacchetto?" },
+        { en: "For both people?", it: "Per entrambi?" },
+        { en: "Two tickets please", it: "Due biglietti, per favore" },
+      ]
+    },
+    {
+      name: "ZTest",
+      words: [
+        { en: "Bread", it: "Pane" },
+        { en: "Wine", it: "Vino" },
+      ]
+    },
+  ];
+
+  // Tabs (and everything indexed off activeIndex) should read alphabetically
+  // — sorted once here rather than reordering the blocks above, so adding a
+  // new category anywhere in the list still ends up in the right spot.
+  categories.sort((a, b) => a.name.localeCompare(b.name));
+
+  const tabsEl = document.getElementById('tabs');
+  const listEl = document.getElementById('word-list');
+  const titleEl = document.getElementById('category-title');
+  const warningEl = document.getElementById('voice-warning');
+  const playBtn = document.getElementById('play-btn');
+  const autoplayHintEl = document.getElementById('autoplay-hint');
+  const delaySliderEl = document.getElementById('delay-slider');
+  const delayValueEl = document.getElementById('delay-value');
+
+  let activeIndex = 0;
+  let italianVoice = null;
+  let englishVoice = null;
+  let playToken = 0;
+  let isPlaying = false;
+  let enToItDelaySeconds = 3;
+
+  // ---- Multi-user profiles ----
+  // Everything below (mastered categories, play counts, last-viewed
+  // category) is stored per user, namespaced by appending the user's own
+  // name to the storage key — see userScopedKey(). localStorage can be
+  // blocked or unreliable for file:// pages on some Android browsers, so
+  // every storage call anywhere in this file is wrapped in try/catch — a
+  // storage failure just means progress doesn't persist, not a broken app.
+  const USERS_STORAGE_KEY = 'italianTutorUsers';
+  const CURRENT_USER_STORAGE_KEY = 'italianTutorCurrentUser';
+
+  function loadUsers(){
+    try {
+      const raw = localStorage.getItem(USERS_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch(e){ return []; }
+  }
+  function saveUsers(list){
+    try { localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(list)); } catch(e){}
+  }
+  function loadCurrentUserName(){
+    try { return localStorage.getItem(CURRENT_USER_STORAGE_KEY); } catch(e){ return null; }
+  }
+  function saveCurrentUserName(name){
+    try { localStorage.setItem(CURRENT_USER_STORAGE_KEY, name); } catch(e){}
+  }
+
+  let users = loadUsers();
+  let currentUser = loadCurrentUserName();
+
+  function userScopedKey(baseKey){
+    return baseKey + '::' + currentUser;
+  }
+
+  // A category shows a small number (times played) until the user
+  // deliberately marks it mastered via the "Mark as complete" banner, at
+  // which point it switches to a checkmark and the number stops mattering.
+  const MASTERED_STORAGE_KEY = 'italianTutorMasteredCategories';
+  const PLAY_COUNTS_STORAGE_KEY = 'italianTutorPlayCounts';
+  const LAST_CATEGORY_STORAGE_KEY = 'italianTutorLastCategory';
+
+  function loadMasteredCategories(){
+    try {
+      const raw = localStorage.getItem(userScopedKey(MASTERED_STORAGE_KEY));
+      return new Set(raw ? JSON.parse(raw) : []);
+    } catch(e){ return new Set(); }
+  }
+  function saveMasteredCategories(){
+    try { localStorage.setItem(userScopedKey(MASTERED_STORAGE_KEY), JSON.stringify([...masteredCategories])); } catch(e){}
+  }
+
+  function loadPlayCounts(){
+    try {
+      const raw = localStorage.getItem(userScopedKey(PLAY_COUNTS_STORAGE_KEY));
+      return raw ? JSON.parse(raw) : {};
+    } catch(e){ return {}; }
+  }
+  function savePlayCounts(){
+    try { localStorage.setItem(userScopedKey(PLAY_COUNTS_STORAGE_KEY), JSON.stringify(playCounts)); } catch(e){}
+  }
+
+  let masteredCategories = new Set();
+  let playCounts = {};
+
+  // Called once currentUser is known/finalized (see startApp/switchToUser).
+  function loadUserProgress(){
+    masteredCategories = loadMasteredCategories();
+    playCounts = loadPlayCounts();
+  }
+
+  function markCategoryMastered(name){
+    if(masteredCategories.has(name)) return;
+    masteredCategories.add(name);
+    saveMasteredCategories();
+    renderTabs();
+  }
+
+  function incrementPlayCount(name){
+    playCounts[name] = (playCounts[name] || 0) + 1;
+    savePlayCounts();
+    renderTabs();
+    return playCounts[name];
+  }
+
+  document.getElementById('clear-progress-btn').addEventListener('click', () => {
+    if(masteredCategories.size === 0 && Object.keys(playCounts).length === 0) return;
+    if(!confirm(`Clear all progress for ${currentUser}?`)) return;
+    masteredCategories.clear();
+    playCounts = {};
+    saveMasteredCategories();
+    savePlayCounts();
+    hideMarkCompleteBanner();
+    renderTabs();
+  });
+
+  // Remembers which category Play was last pressed on, so the app opens
+  // back onto it next time instead of always starting at the first
+  // (alphabetically) category.
+  function loadLastCategoryName(){
+    try { return localStorage.getItem(userScopedKey(LAST_CATEGORY_STORAGE_KEY)); } catch(e){ return null; }
+  }
+
+  function saveLastCategoryName(name){
+    try { localStorage.setItem(userScopedKey(LAST_CATEGORY_STORAGE_KEY), name); } catch(e){}
+  }
+
+  // ---- "Mark as complete" banner ----
+  const markCompleteBannerEl = document.getElementById('mark-complete-banner');
+  const markCompleteTextEl = document.getElementById('mark-complete-text');
+
+  function showMarkCompleteBanner(categoryName, count){
+    markCompleteTextEl.textContent = `Played "${categoryName}" ${count} time${count === 1 ? '' : 's'}.`;
+    markCompleteBannerEl.classList.add('visible');
+    markCompleteBannerEl.dataset.category = categoryName;
+  }
+  function hideMarkCompleteBanner(){
+    markCompleteBannerEl.classList.remove('visible');
+  }
+  document.getElementById('mark-complete-btn').addEventListener('click', () => {
+    const name = markCompleteBannerEl.dataset.category;
+    if(name) markCategoryMastered(name);
+    hideMarkCompleteBanner();
+  });
+  document.getElementById('mark-complete-dismiss').addEventListener('click', hideMarkCompleteBanner);
+
+  // ---- User picker + onboarding/add-user modal ----
+  const userModalOverlay = document.getElementById('user-modal-overlay');
+  const userModalTitle = document.getElementById('user-modal-title');
+  const userModalSub = document.getElementById('user-modal-sub');
+  const userModalInput = document.getElementById('user-modal-input');
+  const userModalSubmit = document.getElementById('user-modal-submit');
+  const userModalCancel = document.getElementById('user-modal-cancel');
+  const userSelectEl = document.getElementById('user-select');
+
+  let userModalOnSubmit = null;
+
+  function showUserModal(opts, onSubmit){
+    userModalTitle.textContent = opts.title;
+    userModalSub.textContent = opts.sub;
+    userModalInput.value = '';
+    userModalCancel.style.display = opts.allowCancel ? 'inline-block' : 'none';
+    userModalOnSubmit = onSubmit;
+    userModalOverlay.classList.add('visible');
+    setTimeout(() => userModalInput.focus(), 50);
+  }
+
+  function hideUserModal(){
+    userModalOverlay.classList.remove('visible');
+    userModalOnSubmit = null;
+  }
+
+  function submitUserModal(){
+    const name = userModalInput.value.trim();
+    if(!name){ userModalInput.focus(); return; }
+    const cb = userModalOnSubmit;
+    hideUserModal();
+    if(cb) cb(name);
+  }
+
+  userModalSubmit.addEventListener('click', submitUserModal);
+  userModalInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') submitUserModal(); });
+  userModalCancel.addEventListener('click', () => {
+    hideUserModal();
+    renderUserSelect(); // reset the dropdown off "+ Add User" back to the current user
+  });
+
+  function renderUserSelect(){
+    userSelectEl.innerHTML = '';
+    users.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      userSelectEl.appendChild(opt);
+    });
+    const addOpt = document.createElement('option');
+    addOpt.value = '__add_user__';
+    addOpt.textContent = '+ Add User';
+    userSelectEl.appendChild(addOpt);
+    userSelectEl.value = currentUser;
+  }
+
+  userSelectEl.addEventListener('change', () => {
+    const val = userSelectEl.value;
+    if(val === '__add_user__'){
+      showUserModal({
+        title: 'Add a new user',
+        sub: 'Enter a name to track their own progress separately.',
+        allowCancel: true
+      }, (name) => {
+        if(!users.includes(name)){
+          users.push(name);
+          saveUsers(users);
+        }
+        switchToUser(name);
+      });
+      return;
+    }
+    switchToUser(val);
+  });
+
+  function switchToUser(name){
+    stopSequence();
+    hideMarkCompleteBanner();
+    currentUser = name;
+    saveCurrentUserName(currentUser);
+    loadUserProgress();
+    activeIndex = 0;
+    const lastCategoryName = loadLastCategoryName();
+    if(lastCategoryName){
+      const foundIndex = categories.findIndex(c => c.name === lastCategoryName);
+      if(foundIndex !== -1) activeIndex = foundIndex;
+    }
+    renderUserSelect();
+    renderTabs();
+    renderWords();
+  }
+
+  function updateAutoplayHint(){
+    autoplayHintEl.textContent =
+      `Plays each word: English, a ${enToItDelaySeconds} second pause, then Italian.`;
+  }
+
+  delaySliderEl.addEventListener('input', () => {
+    enToItDelaySeconds = Number(delaySliderEl.value);
+    delayValueEl.textContent = `${enToItDelaySeconds}s`;
+    updateAutoplayHint();
+  });
+
+  function speakerIcon(){
+    return `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16.5 8.5c1.2 1 1.9 2.2 1.9 3.5s-.7 2.5-1.9 3.5" stroke-width="1.6" stroke="currentColor" fill="none" style="stroke:#f1e6cf"/></svg>`;
+  }
+
+  function playIcon(){ return `<svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>`; }
+  function stopIcon(){ return `<svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>`; }
+
+  function updatePlayButton(){
+    playBtn.classList.toggle('stop-mode', isPlaying);
+    playBtn.innerHTML = isPlaying
+      ? `${stopIcon()}<span>Stop</span>`
+      : `${playIcon()}<span>Play "${categories[activeIndex].name}"</span>`;
+  }
+
+  function renderTabs(){
+    tabsEl.innerHTML = '';
+    categories.forEach((cat, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'tab-btn' + (i === activeIndex ? ' active' : '');
+      let badgeHtml = '';
+      if(masteredCategories.has(cat.name)){
+        badgeHtml = ' <span class="check">✓</span>';
+      } else if(playCounts[cat.name] > 0){
+        badgeHtml = ` <span class="play-count">${playCounts[cat.name]}</span>`;
+      }
+      btn.innerHTML = `<span class="dot"></span>${cat.name}${badgeHtml}`;
+      btn.addEventListener('click', () => {
+        stopSequence();
+        hideMarkCompleteBanner();
+        activeIndex = i;
+        renderTabs();
+        renderWords();
+      });
+      tabsEl.appendChild(btn);
+    });
+  }
+
+  function renderWords(){
+    const cat = categories[activeIndex];
+    titleEl.textContent = cat.name;
+    listEl.innerHTML = '';
+    cat.words.forEach(w => {
+      const li = document.createElement('li');
+      li.className = 'word-card';
+      li.innerHTML = `
+        <button class="speaker en-speaker" aria-label="Play English word">${speakerIcon()}</button>
+        <button class="word-btn">
+          <span class="word-text">
+            <span class="en">${w.en}</span>
+            <span class="it">${w.it}</span>
+          </span>
+          <span class="speaker it-speaker">${speakerIcon()}</span>
+        </button>
+      `;
+      const enSpeakerEl = li.querySelector('.en-speaker');
+      const itSpeakerEl = li.querySelector('.it-speaker');
+
+      li.querySelector('.word-btn').addEventListener('click', () => {
+        stopSequence();
+        li.classList.add('revealed');
+        speak(w.it, li, itSpeakerEl);
+      });
+      enSpeakerEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stopSequence();
+        speakEnglish(w.en, li, enSpeakerEl);
+      });
+      listEl.appendChild(li);
+    });
+    updatePlayButton();
+  }
+
+  // Edge/Chrome list some voices as "Online (Natural)" — cloud voices that
+  // need Windows' online speech service reachable, and can complete with a
+  // normal onend event (no error at all) while producing zero audio if
+  // that service isn't available. Preferring localService voices avoids
+  // picking one of those.
+  // Picks a voice for a language, preferring the Google-branded one —
+  // confirmed on this app's own test machine that the local Windows SAPI
+  // voice ("Microsoft David") can report a clean onstart/onend with zero
+  // actual audio, while the Google voice for the same language genuinely
+  // works. Falls back to a local voice, then whatever's first, for
+  // browsers/systems that don't have a Google voice at all.
+  function pickVoiceFor(voices, langPrefix){
+    const candidates = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
+    return candidates.find(v => v.name.toLowerCase().includes('google'))
+        || candidates.find(v => v.localService)
+        || candidates[0]
+        || null;
+  }
+
+  function pickVoices(){
+    const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+    italianVoice = pickVoiceFor(voices, 'it');
+    englishVoice  = pickVoiceFor(voices, 'en');
+    warningEl.style.display = (voices.length && !italianVoice) ? 'block' : 'none';
+  }
+
+  function clearHighlight(){
+    document.querySelectorAll('.word-card.playing').forEach(el => el.classList.remove('playing'));
+    document.querySelectorAll('.speaker.active').forEach(el => el.classList.remove('active'));
+  }
+
+  function speak(text, cardEl, speakerEl){
+    if(!('speechSynthesis' in window)){
+      warningEl.textContent = "Your browser doesn't support speech synthesis.";
+      warningEl.style.display = 'block';
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'it-IT';
+    if(italianVoice) utter.voice = italianVoice;
+    utter.rate = 0.9;
+
+    clearHighlight();
+    cardEl.classList.add('playing');
+    speakerEl.classList.add('active');
+    utter.onend = () => { cardEl.classList.remove('playing'); speakerEl.classList.remove('active'); };
+    utter.onerror = () => { cardEl.classList.remove('playing'); speakerEl.classList.remove('active'); };
+
+    // Chrome/Edge can silently drop an utterance queued in the same tick as
+    // cancel() — a known speechSynthesis quirk — so give the cancel a beat
+    // to actually land before queuing the new one.
+    setTimeout(() => window.speechSynthesis.speak(utter), 80);
+  }
+
+  // Left speaker button — plays the English word only, no reveal.
+  function speakEnglish(text, cardEl, speakerEl){
+    if(!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'en-US';
+    if(englishVoice) utter.voice = englishVoice;
+    utter.rate = 0.95;
+
+    clearHighlight();
+    cardEl.classList.add('playing');
+    speakerEl.classList.add('active');
+    utter.onend = () => { cardEl.classList.remove('playing'); speakerEl.classList.remove('active'); };
+    utter.onerror = () => { cardEl.classList.remove('playing'); speakerEl.classList.remove('active'); };
+
+    setTimeout(() => window.speechSynthesis.speak(utter), 80);
+  }
+
+  // Spoken sign-off once a full Play run-through reaches the last word — the
+  // queue is already idle at this point (the last word's own onend plus its
+  // 800ms buffer already ran), so no cancel() needed before this one.
+  function announceCategoryFinished(){
+    if(!('speechSynthesis' in window)) return;
+    const utter = new SpeechSynthesisUtterance('Categoria completata');
+    utter.lang = 'it-IT';
+    if(italianVoice) utter.voice = italianVoice;
+    utter.rate = 0.9;
+    window.speechSynthesis.speak(utter);
+  }
+
+  // Speaks the English word, waits enToItDelaySeconds (set by the slider), speaks the Italian word, then calls done()
+  // No cancel() in here — speakPair only ever runs as part of
+  // playCategorySequence's own step-by-step loop, where the previous
+  // utterance has already fully finished (its onend already fired, plus an
+  // 800ms buffer below) by the time this runs again. cancel() right before
+  // speak() in the same tick is what was silently dropping the English
+  // utterance (a known Chrome/Edge speechSynthesis quirk) — removing the
+  // repeated cancel() here instead of just delaying around it removes the
+  // race entirely for every word after the first.
+  function speakPair(word, cardEl, token, done){
+    if(!('speechSynthesis' in window)){ done(); return; }
+
+    const enSpeakerEl = cardEl.querySelector('.en-speaker');
+    const itSpeakerEl = cardEl.querySelector('.it-speaker');
+
+    const uttEn = new SpeechSynthesisUtterance(word.en);
+    uttEn.lang = 'en-US';
+    if(englishVoice) uttEn.voice = englishVoice;
+    uttEn.rate = 0.95;
+
+    const goToItalian = () => {
+      if(token !== playToken) return;
+      enSpeakerEl.classList.remove('active');
+      setTimeout(() => {
+        if(token !== playToken) return;
+        cardEl.classList.add('revealed');
+        itSpeakerEl.classList.add('active');
+        const uttIt = new SpeechSynthesisUtterance(word.it);
+        uttIt.lang = 'it-IT';
+        if(italianVoice) uttIt.voice = italianVoice;
+        uttIt.rate = 0.9;
+        uttIt.onend = () => {
+          itSpeakerEl.classList.remove('active');
+          if(token !== playToken) return;
+          setTimeout(() => { if(token === playToken) done(); }, 800);
+        };
+        uttIt.onerror = () => {
+          itSpeakerEl.classList.remove('active');
+          if(token === playToken) done();
+        };
+        window.speechSynthesis.speak(uttIt);
+      }, enToItDelaySeconds * 1000);
+    };
+
+    uttEn.onend = goToItalian;
+    uttEn.onerror = goToItalian;
+
+    clearHighlight();
+    cardEl.classList.add('playing');
+    enSpeakerEl.classList.add('active');
+    window.speechSynthesis.speak(uttEn);
+  }
+
+  function playCategorySequence(){
+    if(!('speechSynthesis' in window)) return;
+    playToken++;
+    const myToken = playToken;
+    isPlaying = true;
+    updatePlayButton();
+    hideMarkCompleteBanner();
+
+    // Cancel exactly once here (e.g. a single word tapped just before
+    // pressing Play) rather than before every word in the sequence.
+    window.speechSynthesis.cancel();
+
+    // Fresh run-through: hide every Italian word again so each one reveals
+    // in turn as the sequence reaches it, same as tapping a card by hand.
+    document.querySelectorAll('.word-card.revealed').forEach(el => el.classList.remove('revealed'));
+
+    const cat = categories[activeIndex];
+    saveLastCategoryName(cat.name);
+    let i = 0;
+
+    function step(){
+      if(myToken !== playToken) return;
+      if(i >= cat.words.length){
+        isPlaying = false;
+        updatePlayButton();
+        clearHighlight();
+        const newCount = incrementPlayCount(cat.name);
+        announceCategoryFinished();
+        if(!masteredCategories.has(cat.name)) showMarkCompleteBanner(cat.name, newCount);
+        return;
+      }
+      const w = cat.words[i];
+      const cardEl = listEl.children[i];
+      speakPair(w, cardEl, myToken, () => { i++; step(); });
+    }
+    // Give the cancel() above a beat to actually land before the first
+    // speak() call — same cancel()-then-speak() race as speak() above.
+    setTimeout(() => {
+      if(myToken !== playToken) return;
+      announceCategoryStarting(() => {
+        if(myToken !== playToken) return;
+        step();
+      });
+    }, 80);
+  }
+
+  // Spoken intro right before the first word of a Play run-through —
+  // chained via callback (like goToItalian above) so it finishes speaking
+  // before the first word starts, rather than overlapping it.
+  function announceCategoryStarting(callback){
+    if(!('speechSynthesis' in window)){ callback(); return; }
+    const utter = new SpeechSynthesisUtterance('Cominciamo');
+    utter.lang = 'it-IT';
+    if(italianVoice) utter.voice = italianVoice;
+    utter.rate = 0.9;
+    utter.onend = callback;
+    utter.onerror = callback;
+    window.speechSynthesis.speak(utter);
+  }
+
+  function stopSequence(){
+    playToken++;
+    isPlaying = false;
+    if('speechSynthesis' in window) window.speechSynthesis.cancel();
+    updatePlayButton();
+    clearHighlight();
+  }
+
+  playBtn.addEventListener('click', () => {
+    if(isPlaying) stopSequence();
+    else playCategorySequence();
+  });
+
+  if('speechSynthesis' in window){
+    pickVoices();
+    window.speechSynthesis.onvoiceschanged = pickVoices;
+  } else {
+    warningEl.textContent = "Your browser doesn't support speech synthesis.";
+    warningEl.style.display = 'block';
+  }
+
+  // Loads this user's progress, opens back onto whichever category Play was
+  // last pressed on (if any), and does the first render. Shared by the
+  // normal startup path and switchToUser() (called via renderTabs indirectly
+  // through switchToUser, but startApp itself is only ever the initial call).
+  function startApp(){
+    loadUserProgress();
+    activeIndex = 0;
+    const lastCategoryName = loadLastCategoryName();
+    if(lastCategoryName){
+      const foundIndex = categories.findIndex(c => c.name === lastCategoryName);
+      if(foundIndex !== -1) activeIndex = foundIndex;
+    }
+    renderUserSelect();
+    renderTabs();
+    renderWords();
+  }
+
+  if(users.length === 0){
+    // First-ever launch (or storage was cleared) — ask who's learning
+    // before anything else renders.
+    showUserModal({
+      title: "Who's learning?",
+      sub: 'Enter your name to track your own progress.',
+      allowCancel: false
+    }, (name) => {
+      users.push(name);
+      saveUsers(users);
+      currentUser = name;
+      saveCurrentUserName(currentUser);
+
+      // Migrate any progress saved before multi-user support existed into
+      // this first user's own data, rather than silently losing it.
+      try {
+        const oldMastered = localStorage.getItem('italianTutorCompletedCategories');
+        if(oldMastered) localStorage.setItem(userScopedKey(MASTERED_STORAGE_KEY), oldMastered);
+        const oldLastCategory = localStorage.getItem('italianTutorLastCategory');
+        if(oldLastCategory) localStorage.setItem(userScopedKey(LAST_CATEGORY_STORAGE_KEY), oldLastCategory);
+      } catch(e){}
+
+      startApp();
+    });
+  } else {
+    if(!currentUser || !users.includes(currentUser)){
+      currentUser = users[0];
+      saveCurrentUserName(currentUser);
+    }
+    startApp();
+  }
+</script>
+
+</body>
+</html>
