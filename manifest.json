@@ -1,6 +1,6 @@
 {
-  "name": "DSR's Italian Tutor",
-  "short_name": "ItalianTutor",
+  "name": "DSR Italian Tutor",
+  "short_name": "Italian Tutor",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

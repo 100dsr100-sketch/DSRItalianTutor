@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DSR's Italian Tutor</title>
+<title>DSR Italian Tutor</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPGRlZnM+CiAgICA8Y2xpcFBhdGggaWQ9InIiPgogICAgICA8cmVjdCB4PSIyIiB5PSIyIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHJ4PSIxMiIvPgogICAgPC9jbGlwUGF0aD4KICA8L2RlZnM+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI3IpIj4KICAgIDxyZWN0IHg9IjIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzAwOEM0NSIvPgogICAgPHJlY3QgeD0iMjIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2MCIgZmlsbD0iI0Y0RjVGMCIvPgogICAgPHJlY3QgeD0iNDIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2MCIgZmlsbD0iI0NEMjEyQSIvPgogIDwvZz4KPC9zdmc+Cg==">
 <meta name="theme-color" content="#123640">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ItalianTutor">
+<meta name="apple-mobile-web-app-title" content="DSR Italian Tutor">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
 <style>
@@ -70,6 +70,20 @@
     position: absolute;
     top: 16px;
     right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .version-tag{
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--ceramic-yellow);
+    white-space: nowrap;
+    padding-right: 4px;
   }
 
   .user-select{
@@ -231,6 +245,90 @@
     color: rgba(241,230,207,0.5);
   }
 
+  /* Title + "reset category" sit together on the left; Play stays on the right. */
+  .category-row-left{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+
+  .reset-category-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1.5px solid var(--ceramic-yellow);
+    color: var(--ceramic-yellow);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease;
+    flex-shrink: 0;
+  }
+  .reset-category-btn:hover{
+    background: var(--ceramic-yellow);
+    color: var(--teal-deep);
+  }
+
+  /* "word learnt" tick — hidden until the word has been played this session
+     (li.word-card.played), then floats in the centre of the word bar. One-way:
+     tapping it drops the word from the category until "reset category". */
+  .word-learnt-toggle{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    align-items: center;
+    gap: 7px;
+    background: var(--teal-deep);
+    border: 1.5px solid var(--ceramic-yellow);
+    color: var(--ceramic-yellow);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    z-index: 2;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  li.word-card.played .word-learnt-toggle{ display: inline-flex; }
+  .word-learnt-toggle:hover{
+    background: var(--ceramic-yellow);
+    color: var(--teal-deep);
+  }
+  .word-learnt-toggle .box{
+    width: 13px; height: 13px;
+    border: 1.6px solid currentColor;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  li.word-card.learning-out{
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  .word-list-empty{
+    background: rgba(231,178,60,0.12);
+    border: 1px dashed var(--ceramic-yellow);
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+    font-size: 13.5px;
+    color: rgba(241,230,207,0.8);
+    line-height: 1.5;
+  }
+
   .delay-control{
     display: flex;
     align-items: center;
@@ -298,6 +396,7 @@
   }
 
   li.word-card{
+    position: relative;
     background: var(--teal);
     border: 1px solid var(--line);
     border-radius: 14px;
@@ -305,7 +404,7 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    transition: border-color 0.18s ease, transform 0.12s ease;
+    transition: border-color 0.18s ease, transform 0.25s ease, opacity 0.25s ease;
   }
 
   button.word-btn{
@@ -559,6 +658,7 @@
   <header>
     <div class="user-bar">
       <select id="user-select" class="user-select"></select>
+      <span class="version-tag">Version 1a</span>
     </div>
     <p class="eyebrow">Parole di ogni giorno</p>
     <h1>Learn <em>Italian</em>,<br>one tap at a time</h1>
@@ -573,7 +673,10 @@
 
   <main>
     <div class="category-row">
-      <h2 class="category-title" id="category-title"></h2>
+      <div class="category-row-left">
+        <h2 class="category-title" id="category-title"></h2>
+        <button class="reset-category-btn" id="reset-category-btn" type="button" style="display:none;">&#8635; Reset category</button>
+      </div>
       <button class="play-btn" id="play-btn"></button>
     </div>
     <p class="autoplay-hint" id="autoplay-hint">Plays each word: English, a 3 second pause, then Italian.</p>
@@ -1214,6 +1317,7 @@
   const titleEl = document.getElementById('category-title');
   const warningEl = document.getElementById('voice-warning');
   const playBtn = document.getElementById('play-btn');
+  const resetCategoryBtn = document.getElementById('reset-category-btn');
   const autoplayHintEl = document.getElementById('autoplay-hint');
   const delaySliderEl = document.getElementById('delay-slider');
   const delayValueEl = document.getElementById('delay-value');
@@ -1223,7 +1327,18 @@
   let englishVoice = null;
   let playToken = 0;
   let isPlaying = false;
+  // Progress of the current Play run, tracked by word (English text) rather
+  // than by list index so a "word learnt" tick mid-run can drop a word and
+  // the run can pick straight back up. null when no run is active.
+  let sequenceProgress = null;   // { catName, doneEn: Set<string> }
   let enToItDelaySeconds = 3;
+  // Per-user: which words the learner has ticked off as "learnt". Shape is
+  // { [categoryName]: [englishText, ...] }. Learnt words drop out of the
+  // category (list + Play run) until "reset category" for that category.
+  let learnedWords = {};
+  // Session-only: "catName::en" for every word played since load. Gates the
+  // "word learnt" tick — it only shows once you've actually heard the word.
+  const playedWords = new Set();
 
   // ---- Multi-user profiles ----
   // Everything below (mastered categories, play counts, last-viewed
@@ -1285,6 +1400,18 @@
     try { localStorage.setItem(userScopedKey(PLAY_COUNTS_STORAGE_KEY), JSON.stringify(playCounts)); } catch(e){}
   }
 
+  const LEARNED_WORDS_STORAGE_KEY = 'italianTutorLearnedWords';
+
+  function loadLearnedWords(){
+    try {
+      const raw = localStorage.getItem(userScopedKey(LEARNED_WORDS_STORAGE_KEY));
+      return raw ? JSON.parse(raw) : {};
+    } catch(e){ return {}; }
+  }
+  function saveLearnedWords(){
+    try { localStorage.setItem(userScopedKey(LEARNED_WORDS_STORAGE_KEY), JSON.stringify(learnedWords)); } catch(e){}
+  }
+
   let masteredCategories = new Set();
   let playCounts = {};
 
@@ -1292,6 +1419,63 @@
   function loadUserProgress(){
     masteredCategories = loadMasteredCategories();
     playCounts = loadPlayCounts();
+    learnedWords = loadLearnedWords();
+    playedWords.clear();
+  }
+
+  function wordPlayKey(catName, w){ return catName + '::' + w.en; }
+
+  function isWordLearned(catName, w){
+    const list = learnedWords[catName];
+    return Array.isArray(list) && list.includes(w.en);
+  }
+
+  function visibleWords(cat){
+    return cat.words.filter(w => !isWordLearned(cat.name, w));
+  }
+
+  function markWordLearned(catName, w){
+    if(!Array.isArray(learnedWords[catName])) learnedWords[catName] = [];
+    if(!learnedWords[catName].includes(w.en)){
+      learnedWords[catName].push(w.en);
+      saveLearnedWords();
+    }
+  }
+
+  function markWordPlayed(catName, w, cardEl){
+    playedWords.add(wordPlayKey(catName, w));
+    if(cardEl) cardEl.classList.add('played');
+  }
+
+  function learnWordFromCard(catName, w, li){
+    const midRun = isPlaying && sequenceProgress && sequenceProgress.catName === catName;
+    markWordLearned(catName, w);
+
+    if(midRun){
+      // Don't abandon the Play run. Cut the current word short, hold for the
+      // same gap the sequence uses between English and Italian, then carry
+      // on with the rest of the category (minus this word).
+      const resumeToken = ++playToken;   // invalidates only the in-flight word
+      if('speechSynthesis' in window) window.speechSynthesis.cancel();
+      clearHighlight();
+      if(li) li.classList.add('learning-out');
+      const prevHint = autoplayHintEl.textContent;
+      autoplayHintEl.textContent = `Marked "${w.en}" as learnt — carrying on in ${enToItDelaySeconds}s…`;
+      setTimeout(() => {
+        if(playToken !== resumeToken) return;   // Stop / tab change / new Play took over during the pause
+        autoplayHintEl.textContent = prevHint;
+        renderWords();
+        playCategorySequence(true);
+      }, enToItDelaySeconds * 1000);
+      return;
+    }
+
+    if(li){
+      li.classList.add('learning-out');
+      setTimeout(renderWords, 240);
+    } else {
+      renderWords();
+    }
   }
 
   function markCategoryMastered(name){
@@ -1309,14 +1493,32 @@
   }
 
   document.getElementById('clear-progress-btn').addEventListener('click', () => {
-    if(masteredCategories.size === 0 && Object.keys(playCounts).length === 0) return;
+    if(masteredCategories.size === 0 && Object.keys(playCounts).length === 0 && Object.keys(learnedWords).length === 0) return;
     if(!confirm(`Clear all progress for ${currentUser}?`)) return;
     masteredCategories.clear();
     playCounts = {};
+    learnedWords = {};
+    playedWords.clear();
     saveMasteredCategories();
     savePlayCounts();
+    saveLearnedWords();
     hideMarkCompleteBanner();
     renderTabs();
+    renderWords();
+  });
+
+  // "Reset category" — brings every ticked-off word in the current category
+  // back into the list. Per-user (learnedWords is user-scoped) and per-category.
+  resetCategoryBtn.addEventListener('click', () => {
+    const cat = categories[activeIndex];
+    const n = (learnedWords[cat.name] || []).length;
+    if(n === 0) return;
+    if(!confirm(`Bring back ${n} learnt word${n === 1 ? '' : 's'} in "${cat.name}"?`)) return;
+    stopSequence();
+    delete learnedWords[cat.name];
+    saveLearnedWords();
+    [...playedWords].forEach(k => { if(k.startsWith(cat.name + '::')) playedWords.delete(k); });
+    renderWords();
   });
 
   // Remembers which category Play was last pressed on, so the app opens
@@ -1493,9 +1695,29 @@
     const cat = categories[activeIndex];
     titleEl.textContent = cat.name;
     listEl.innerHTML = '';
-    cat.words.forEach(w => {
+
+    const learnedCount = (learnedWords[cat.name] || []).length;
+    resetCategoryBtn.style.display = learnedCount > 0 ? 'inline-flex' : 'none';
+    resetCategoryBtn.textContent = `↻ Reset category (${learnedCount})`;
+
+    const words = visibleWords(cat);
+
+    if(words.length === 0){
+      const empty = document.createElement('li');
+      empty.className = 'word-list-empty';
+      empty.textContent = 'Every word in this category is marked as learnt. Tap "Reset category" above to bring them all back.';
+      listEl.appendChild(empty);
+      updatePlayButton();
+      return;
+    }
+
+    words.forEach(w => {
       const li = document.createElement('li');
       li.className = 'word-card';
+      if(playedWords.has(wordPlayKey(cat.name, w))) li.classList.add('played');
+      // Keep already-spoken words revealed if a Play run is mid-flight
+      // (renderWords runs when a word is ticked learnt during a run).
+      if(sequenceProgress && sequenceProgress.catName === cat.name && sequenceProgress.doneEn.has(w.en)) li.classList.add('revealed');
       li.innerHTML = `
         <button class="speaker en-speaker" aria-label="Play English word">${speakerIcon()}</button>
         <button class="word-btn">
@@ -1505,6 +1727,7 @@
           </span>
           <span class="speaker it-speaker">${speakerIcon()}</span>
         </button>
+        <button class="word-learnt-toggle" type="button" aria-label="Mark this word as learnt"><span class="box"></span>word learnt</button>
       `;
       const enSpeakerEl = li.querySelector('.en-speaker');
       const itSpeakerEl = li.querySelector('.it-speaker');
@@ -1512,12 +1735,18 @@
       li.querySelector('.word-btn').addEventListener('click', () => {
         stopSequence();
         li.classList.add('revealed');
+        markWordPlayed(cat.name, w, li);
         speak(w.it, li, itSpeakerEl);
       });
       enSpeakerEl.addEventListener('click', (e) => {
         e.stopPropagation();
         stopSequence();
+        markWordPlayed(cat.name, w, li);
         speakEnglish(w.en, li, enSpeakerEl);
+      });
+      li.querySelector('.word-learnt-toggle').addEventListener('click', (e) => {
+        e.stopPropagation();
+        learnWordFromCard(cat.name, w, li);
       });
       listEl.appendChild(li);
     });
@@ -1663,7 +1892,10 @@
     window.speechSynthesis.speak(uttEn);
   }
 
-  function playCategorySequence(){
+  // resume === true means "keep going from where a 'word learnt' tick
+  // interrupted us" — the existing sequenceProgress is kept and there's no
+  // spoken "Cominciamo". Any other call starts a fresh run from the top.
+  function playCategorySequence(resume){
     if(!('speechSynthesis' in window)) return;
     playToken++;
     const myToken = playToken;
@@ -1675,18 +1907,36 @@
     // pressing Play) rather than before every word in the sequence.
     window.speechSynthesis.cancel();
 
-    // Fresh run-through: hide every Italian word again so each one reveals
-    // in turn as the sequence reaches it, same as tapping a card by hand.
-    document.querySelectorAll('.word-card.revealed').forEach(el => el.classList.remove('revealed'));
-
     const cat = categories[activeIndex];
+
+    if(!resume && visibleWords(cat).length === 0){
+      isPlaying = false;
+      sequenceProgress = null;
+      updatePlayButton();
+      return;
+    }
+
+    if(resume && sequenceProgress && sequenceProgress.catName === cat.name){
+      // keep the existing progress
+    } else {
+      sequenceProgress = { catName: cat.name, doneEn: new Set() };
+      // Fresh run-through: hide every Italian word again so each one reveals
+      // in turn as the sequence reaches it, same as tapping a card by hand.
+      document.querySelectorAll('.word-card.revealed').forEach(el => el.classList.remove('revealed'));
+    }
+
     saveLastCategoryName(cat.name);
-    let i = 0;
 
     function step(){
       if(myToken !== playToken) return;
-      if(i >= cat.words.length){
+      // Recompute the visible list every step so a word ticked "learnt"
+      // mid-run simply drops out; progress is tracked by English text in
+      // sequenceProgress.doneEn, not by a fixed index.
+      const words = visibleWords(cat);
+      const idx = words.findIndex(w => !sequenceProgress.doneEn.has(w.en));
+      if(idx === -1){
         isPlaying = false;
+        sequenceProgress = null;
         updatePlayButton();
         clearHighlight();
         const newCount = incrementPlayCount(cat.name);
@@ -1694,18 +1944,27 @@
         if(!masteredCategories.has(cat.name)) showMarkCompleteBanner(cat.name, newCount);
         return;
       }
-      const w = cat.words[i];
-      const cardEl = listEl.children[i];
-      speakPair(w, cardEl, myToken, () => { i++; step(); });
+      const w = words[idx];
+      const cardEl = listEl.children[idx];
+      markWordPlayed(cat.name, w, cardEl);
+      speakPair(w, cardEl, myToken, () => {
+        if(myToken !== playToken || !sequenceProgress) return;
+        sequenceProgress.doneEn.add(w.en);
+        step();
+      });
     }
     // Give the cancel() above a beat to actually land before the first
     // speak() call — same cancel()-then-speak() race as speak() above.
     setTimeout(() => {
       if(myToken !== playToken) return;
-      announceCategoryStarting(() => {
-        if(myToken !== playToken) return;
+      if(resume){
         step();
-      });
+      } else {
+        announceCategoryStarting(() => {
+          if(myToken !== playToken) return;
+          step();
+        });
+      }
     }, 80);
   }
 
@@ -1726,6 +1985,7 @@
   function stopSequence(){
     playToken++;
     isPlaying = false;
+    sequenceProgress = null;
     if('speechSynthesis' in window) window.speechSynthesis.cancel();
     updatePlayButton();
     clearHighlight();
