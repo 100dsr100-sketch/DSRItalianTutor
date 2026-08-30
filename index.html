@@ -658,7 +658,7 @@
   <header>
     <div class="user-bar">
       <select id="user-select" class="user-select"></select>
-      <span class="version-tag">Version 1a</span>
+      <span class="version-tag">Version 1b</span>
     </div>
     <p class="eyebrow">Parole di ogni giorno</p>
     <h1>Learn <em>Italian</em>,<br>one tap at a time</h1>
@@ -746,6 +746,26 @@
       console.error('Service worker registration failed', err);
     });
   }
+
+  // --- keep the screen awake while the app is open ----------------------
+  // Screen Wake Lock (Android Chrome / Edge and other supporting browsers).
+  // The OS drops the lock automatically whenever the tab is hidden, so
+  // re-acquire it when the page becomes visible again, and retry on the
+  // first taps in case the very first request was refused before any user
+  // interaction. Silently does nothing where the API isn't available.
+  let screenWakeLock = null;
+  async function requestWakeLock(){
+    if(!('wakeLock' in navigator) || screenWakeLock) return;
+    try {
+      screenWakeLock = await navigator.wakeLock.request('screen');
+      screenWakeLock.addEventListener('release', () => { screenWakeLock = null; });
+    } catch(e){ /* not permitted right now, e.g. battery saver or no gesture yet */ }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if(document.visibilityState === 'visible') requestWakeLock();
+  });
+  document.addEventListener('click', requestWakeLock);
+  requestWakeLock();
 
   const categories = [
     {
