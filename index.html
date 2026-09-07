@@ -350,6 +350,22 @@
     color: var(--ceramic-yellow);
   }
 
+  .delay-control .phrase-double{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: rgba(241,230,207,0.7);
+    white-space: nowrap;
+  }
+  .delay-control .phrase-double input[type="checkbox"]{
+    accent-color: var(--terracotta);
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+
   .mark-complete-banner{
     display: none;
     align-items: center;
@@ -658,7 +674,7 @@
   <header>
     <div class="user-bar">
       <select id="user-select" class="user-select"></select>
-      <span class="version-tag">Version 1g</span>
+      <span class="version-tag">Version 1i</span>
     </div>
     <p class="eyebrow">Parole di ogni giorno</p>
     <h1>Learn <em>Italian</em>,<br>one tap at a time</h1>
@@ -684,6 +700,10 @@
       <label for="delay-slider">Delay</label>
       <input type="range" id="delay-slider" min="1" max="5" step="1" value="3">
       <span class="delay-value" id="delay-value">3s</span>
+      <label class="phrase-double" for="phrase-double" title="Double the delay for answers that are more than one word">
+        <input type="checkbox" id="phrase-double">
+        Phrase double
+      </label>
     </div>
     <div id="mark-complete-banner" class="mark-complete-banner">
       <span id="mark-complete-text"></span>
@@ -1051,6 +1071,22 @@
         { en: "One way (road sign)", it: "Senso unico" },
         { en: "One way (ticket)", it: "Solo andata" },
         { en: "Return", it: "Ritorno" },
+        { en: "Over", it: "Sopra" },
+        { en: "Under", it: "Sotto" },
+        { en: "One kilometer", it: "Un chilometro" },
+        { en: "One mile", it: "Un miglio" },
+        { en: "One meter", it: "Un metro" },
+        { en: "One inch", it: "Un pollice" },
+        { en: "One centimeter", it: "Un centimetro" },
+        { en: "One millimeter", it: "Un millimetro" },
+        { en: "Measure", it: "Misurare" },
+        { en: "Very far", it: "Molto lontano" },
+        { en: "Very close", it: "Molto vicino" },
+        { en: "Clockwise", it: "In senso orario" },
+        { en: "Anticlockwise", it: "In senso antiorario" },
+        { en: "To the dock", it: "Al molo" },
+        { en: "To the station", it: "Alla stazione" },
+        { en: "To the airport", it: "All'aeroporto" },
       ]
     },
     {
@@ -1169,35 +1205,6 @@
         { en: "Saline drip", it: "Flebo" },
         { en: "Medicine", it: "Medicina" },
         { en: "Tablet", it: "Compressa" },
-      ]
-    },
-    {
-      name: "Directions",
-      words: [
-        { en: "North", it: "Nord" },
-        { en: "South", it: "Sud" },
-        { en: "East", it: "Est" },
-        { en: "West", it: "Ovest" },
-        { en: "Up", it: "Su" },
-        { en: "Down", it: "Giù" },
-        { en: "Left", it: "Sinistra" },
-        { en: "Right", it: "Destra" },
-        { en: "Over", it: "Sopra" },
-        { en: "Under", it: "Sotto" },
-        { en: "One kilometer", it: "Un chilometro" },
-        { en: "One mile", it: "Un miglio" },
-        { en: "One meter", it: "Un metro" },
-        { en: "One inch", it: "Un pollice" },
-        { en: "One centimeter", it: "Un centimetro" },
-        { en: "One millimeter", it: "Un millimetro" },
-        { en: "Measure", it: "Misurare" },
-        { en: "Very far", it: "Molto lontano" },
-        { en: "Very close", it: "Molto vicino" },
-        { en: "Clockwise", it: "In senso orario" },
-        { en: "Anticlockwise", it: "In senso antiorario" },
-        { en: "To the dock", it: "Al molo" },
-        { en: "To the station", it: "Alla stazione" },
-        { en: "To the airport", it: "All'aeroporto" },
       ]
     },
     {
@@ -1381,6 +1388,36 @@
       ]
     },
     {
+      name: "Work Day",
+      words: [
+        { en: "Start work", it: "Iniziare il lavoro" },
+        { en: "I work at", it: "Lavoro presso" },
+        { en: "Office", it: "Ufficio" },
+        { en: "Factory", it: "Fabbrica" },
+        { en: "Farm", it: "Fattoria" },
+        { en: "Where do you work", it: "Dove lavori?" },
+        { en: "Holiday", it: "Ferie" },
+        { en: "Secretary", it: "Segretario" },
+        { en: "Cashier", it: "Cassiere" },
+        { en: "Manager", it: "Direttore" },
+        { en: "Owner", it: "Proprietario" },
+        { en: "Worker", it: "Lavoratore" },
+        { en: "Uniform", it: "Divisa" },
+        { en: "Lunchtime", it: "Ora di pranzo" },
+        { en: "Closing time", it: "Orario di chiusura" },
+        { en: "Opening hours", it: "Orario di apertura" },
+        { en: "Cleaner", it: "Addetto alle pulizie" },
+        { en: "Doctor", it: "Medico" },
+        { en: "Lawyer", it: "Avvocato" },
+        { en: "Teacher", it: "Insegnante" },
+        { en: "Policeman", it: "Poliziotto" },
+        { en: "Soldier", it: "Soldato" },
+        { en: "Computer Programmer", it: "Programmatore informatico" },
+        { en: "Office Administrator", it: "Amministratore d'ufficio" },
+        { en: "Front Counter", it: "Banco reception" },
+      ]
+    },
+    {
       name: "ZTest",
       words: [
         { en: "Bread", it: "Pane" },
@@ -1403,6 +1440,19 @@
   const autoplayHintEl = document.getElementById('autoplay-hint');
   const delaySliderEl = document.getElementById('delay-slider');
   const delayValueEl = document.getElementById('delay-value');
+  const phraseDoubleEl = document.getElementById('phrase-double');
+
+  // "Phrase double": when ticked, any word whose Italian answer is more than
+  // one word gets twice the slider delay before the answer is spoken. Single
+  // words ("Sì", "No") keep the normal delay.
+  function isMultiWordAnswer(text){
+    return String(text || '').trim().split(/\s+/).length > 1;
+  }
+  function enToItDelayForWord(word){
+    const doubled = phraseDoubleEl && phraseDoubleEl.checked
+      && word && isMultiWordAnswer(word.it);
+    return enToItDelaySeconds * (doubled ? 2 : 1);
+  }
 
   let activeIndex = 0;
   let italianVoice = null;
@@ -1961,7 +2011,7 @@
           if(token === playToken) done();
         };
         window.speechSynthesis.speak(uttIt);
-      }, enToItDelaySeconds * 1000);
+      }, enToItDelayForWord(word) * 1000);
     };
 
     uttEn.onend = goToItalian;

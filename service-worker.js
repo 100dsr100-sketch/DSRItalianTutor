@@ -7,7 +7,7 @@
 // cache when offline. Every successful network response is copied into the
 // cache, so the offline copy stays up to date as long as the user opens the
 // app online now and then. Bump CACHE_NAME to force old caches to be dropped.
-const CACHE_NAME = 'italian-tutor-v2';
+const CACHE_NAME = 'italian-tutor-v4';
 const CORE_ASSETS = [
   './',
   './index.html',
