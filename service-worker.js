@@ -8,6 +8,7 @@
 // cache, so the offline copy stays up to date as long as the user opens the
 // app online now and then. Bump CACHE_NAME to force old caches to be dropped.
 const CACHE_NAME = 'italian-tutor-v4';
+const OWN = 'italian-tutor-';   // only ever delete THIS app's old caches – every DSR app shares the github.io origin's cache storage
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -27,7 +28,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        keys.filter((key) => key !== CACHE_NAME && key.indexOf(OWN) === 0).map((key) => caches.delete(key))
       ))
       .then(() => self.clients.claim())
   );
