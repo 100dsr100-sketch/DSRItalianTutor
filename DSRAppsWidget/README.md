@@ -1,7 +1,7 @@
 # DSR Apps widget
 
 A home-screen widget for the Galaxy S22 Ultra in the same style as the DSR
-power switch: a gold outlined rounded frame with six dark tiles, each with a
+power switch: a gold outlined rounded frame with seven dark tiles, each with a
 gold icon and label.
 
 | Tile    | Opens                  | Package                          |
@@ -12,6 +12,7 @@ gold icon and label.
 | Gallery | Samsung Gallery        | `com.sec.android.gallery3d`      |
 | Music   | Samsung Music          | `com.sec.android.app.music`      |
 | Health  | Samsung Health         | `com.sec.android.app.shealth`    |
+| Files   | Samsung My Files       | `com.sec.android.app.myfiles`    |
 
 If an app isn't installed, its tile opens the Play Store page for it.
 
@@ -24,7 +25,7 @@ If an app isn't installed, its tile opens the Play Store page for it.
    that touches this folder).
 2. Open the APK and allow "Install unknown apps" for your browser when asked.
 3. Long-press an empty spot on the home screen → **Widgets** → **DSR Apps**,
-   and drag it onto the screen. It fills 4 columns by 1 row and can be resized.
+   and drag it onto the screen. It fills the full width (5 columns) by 1 row and can be resized.
 
 ## Build locally
 

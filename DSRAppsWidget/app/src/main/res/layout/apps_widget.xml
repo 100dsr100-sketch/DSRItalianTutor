@@ -132,4 +132,25 @@
                 style="@style/TileLabel"
                 android:text="Health" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_files"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_files" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Files" />
+        </LinearLayout>
 </LinearLayout>

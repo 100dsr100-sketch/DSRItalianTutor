@@ -9,6 +9,7 @@
         <package android:name="com.sec.android.gallery3d" />
         <package android:name="com.sec.android.app.music" />
         <package android:name="com.sec.android.app.shealth" />
+        <package android:name="com.sec.android.app.myfiles" />
     </queries>
 
     <application

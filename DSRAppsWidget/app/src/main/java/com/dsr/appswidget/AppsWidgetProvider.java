@@ -13,7 +13,7 @@ public class AppsWidgetProvider extends AppWidgetProvider {
     // Tile view id -> package it opens.
     private static final int[] TILES = {
             R.id.tile_keep, R.id.tile_drive, R.id.tile_photos,
-            R.id.tile_gallery, R.id.tile_music, R.id.tile_health,
+            R.id.tile_gallery, R.id.tile_music, R.id.tile_health, R.id.tile_files,
     };
     private static final String[] PACKAGES = {
             "com.google.android.keep",
@@ -22,6 +22,7 @@ public class AppsWidgetProvider extends AppWidgetProvider {
             "com.sec.android.gallery3d",
             "com.sec.android.app.music",
             "com.sec.android.app.shealth",
+            "com.sec.android.app.myfiles",
     };
 
     @Override
