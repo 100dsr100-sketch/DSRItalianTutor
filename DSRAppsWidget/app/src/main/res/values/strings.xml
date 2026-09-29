@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">DSR Apps</string>
+    <string name="widget_name">DSR Apps</string>
+    <string name="widget_description">Keep, Drive, Photos, Gallery, Music and Health</string>
+    <string name="info_text">To add the widget:\n\n1. Long-press an empty spot on your home screen\n2. Tap Widgets\n3. Find DSR Apps and drag it onto the screen</string>
+</resources>

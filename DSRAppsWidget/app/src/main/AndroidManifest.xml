@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Android 11+ hides other apps unless we declare the ones we launch. -->
+    <queries>
+        <package android:name="com.google.android.keep" />
+        <package android:name="com.google.android.apps.docs" />
+        <package android:name="com.google.android.apps.photos" />
+        <package android:name="com.sec.android.gallery3d" />
+        <package android:name="com.sec.android.app.music" />
+        <package android:name="com.sec.android.app.shealth" />
+    </queries>
+
+    <application
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+
+        <activity
+            android:name=".InfoActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".AppsWidgetProvider"
+            android:label="@string/widget_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/apps_widget_info" />
+        </receiver>
+    </application>
+</manifest>

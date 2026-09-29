@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_frame"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/tile_keep"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_keep" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Keep" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_drive"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_drive" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Drive" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_photos"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_photos" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Photos" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_gallery"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_gallery" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Gallery" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_music"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_music" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Music" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_health"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_health" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Health" />
+        </LinearLayout>
+</LinearLayout>

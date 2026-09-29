@@ -1,0 +1,7 @@
+<resources>
+    <color name="dsr_gold">#E8B830</color>
+    <color name="dsr_gold_dim">#4A3D17</color>
+    <color name="dsr_frame_bg">#050505</color>
+    <color name="dsr_tile_bg">#0E0E0E</color>
+    <color name="dsr_tile_pressed">#2A2410</color>
+</resources>
