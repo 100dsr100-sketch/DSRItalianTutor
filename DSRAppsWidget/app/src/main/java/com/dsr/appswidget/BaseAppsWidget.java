@@ -43,8 +43,11 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
         for (int i = 0; i < config.count; i++) {
             WidgetConfig.Entry e = config.entries[i];
             RemoteViews tile = new RemoteViews(pkg, R.layout.tile);
-            Icon icon = e == null ? null : icons.icon(e, config.gold);
-            if (icon != null) {
+            int builtIn = e == null ? 0 : icons.builtInResource(e, config.gold);
+            Icon icon = e == null || builtIn != 0 ? null : icons.icon(e, config.gold);
+            if (builtIn != 0) {
+                tile.setImageViewResource(R.id.icon, builtIn);
+            } else if (icon != null) {
                 tile.setImageViewIcon(R.id.icon, icon);
             } else {
                 tile.setImageViewResource(R.id.icon, e == null ? R.drawable.ic_add : R.drawable.ic_missing);

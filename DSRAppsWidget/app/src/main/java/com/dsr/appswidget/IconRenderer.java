@@ -29,6 +29,16 @@ final class IconRenderer {
         this.size = Math.round(sizeDp * context.getResources().getDisplayMetrics().density);
     }
 
+    /**
+     * This app's own drawable to show, or 0. Widgets set these with setImageViewResource, which
+     * the home screen loads through the widget's own resources (no package lookup needed).
+     */
+    int builtInResource(WidgetConfig.Entry e, boolean gold) {
+        int builtIn = Icons.drawable(e.icon);
+        if (builtIn == 0) return 0;
+        return gold || appIconResource(e) == 0 ? builtIn : 0;
+    }
+
     /** Null if there is nothing to show (app not installed and no built-in icon). */
     Icon icon(WidgetConfig.Entry e, boolean gold) {
         int builtIn = Icons.drawable(e.icon);
@@ -101,24 +111,28 @@ final class IconRenderer {
         icon.getPixels(px, 0, size, 0, 0, size, size);
 
         int[] buckets = new int[32];
-        int transparent = 0;
         for (int p : px) {
-            int alpha = p >>> 24;
-            if (alpha > 200) buckets[luma(p) >> 3]++;
-            else if (alpha < 50) transparent++;
+            if ((p >>> 24) > 200) buckets[luma(p) >> 3]++;
         }
         int bg = 0;
         for (int i = 1; i < buckets.length; i++) {
             if (buckets[i] > buckets[bg]) bg = i;
         }
         int bgLuma = bg * 8 + 4;
-        // Logo on a transparent background (older icons): use its outline instead.
-        boolean silhouette = transparent > buckets[bg];
 
+        int[] glyph = new int[n];
+        long glyphSum = 0, alphaSum = 0;
         for (int i = 0; i < n; i++) {
             int alpha = px[i] >>> 24;
-            int a = silhouette ? alpha
-                    : Math.min(255, Math.max(0, Math.abs(luma(px[i]) - bgLuma) * 3 - 60)) * alpha / 255;
+            glyph[i] = Math.min(255, Math.max(0, Math.abs(luma(px[i]) - bgLuma) * 3 - 60)) * alpha / 255;
+            glyphSum += glyph[i];
+            alphaSum += alpha;
+        }
+        // Almost no contrasting detail (e.g. a one-colour logo): use the icon's outline instead.
+        boolean silhouette = glyphSum * 16 < alphaSum;
+
+        for (int i = 0; i < n; i++) {
+            int a = silhouette ? px[i] >>> 24 : glyph[i];
             px[i] = (a << 24) | (GOLD & 0xFFFFFF);
         }
         icon.setPixels(px, 0, size, 0, 0, size, size);

@@ -59,8 +59,8 @@ final class WidgetConfig {
         config.gold = prefs.getBoolean("gold_" + widgetId, true);
         String[] lines = apps.split("\n", -1);
         for (int i = 0; i < MAX_COUNT && i < lines.length; i++) {
-            if (lines[i].isEmpty()) continue;
             String[] f = lines[i].split("\t", -1);
+            if (f.length < 5) continue; // empty slot (the prefs file may pad it with spaces)
             Entry e = new Entry();
             e.pkg = orNull(f[0]);
             e.cls = orNull(f[1]);
