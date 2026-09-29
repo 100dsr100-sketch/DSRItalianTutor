@@ -1,7 +1,12 @@
 <resources>
     <style name="TileLabel">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">8sp</item>
+        <item name="android:autoSizeMaxTextSize">12sp</item>
+        <item name="android:paddingHorizontal">2dp</item>
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/dsr_gold</item>
