@@ -9,7 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
-/** A row of tiles; each tile opens the first installed package from its list. */
+/** A row of tiles; each tile opens a link or the first installed package from its list. */
 public abstract class BaseAppsWidget extends AppWidgetProvider {
 
     protected abstract int layout();
@@ -19,18 +19,39 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
     /** Per tile: candidate packages, in order of preference. */
     protected abstract String[][] packages();
 
+    /** Per tile: optional https link to open (in the tile's app if it handles it), or null. */
+    protected String[] links() {
+        return new String[tiles().length];
+    }
+
     @Override
     public void onUpdate(Context context, AppWidgetManager manager, int[] widgetIds) {
         RemoteViews views = new RemoteViews(context.getPackageName(), layout());
         int[] tiles = tiles();
         String[][] packages = packages();
+        String[] links = links();
         for (int i = 0; i < tiles.length; i++) {
-            views.setOnClickPendingIntent(tiles[i], launchIntent(context, packages[i], tiles[i]));
+            Intent intent = links[i] != null
+                    ? linkIntent(context, links[i], packages[i][0])
+                    : appIntent(context, packages[i]);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            views.setOnClickPendingIntent(tiles[i], PendingIntent.getActivity(context, tiles[i], intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE));
         }
         manager.updateAppWidget(widgetIds, views);
     }
 
-    private static PendingIntent launchIntent(Context context, String[] candidates, int requestCode) {
+    /** Opens the link in the given app if it can handle it, otherwise in the browser. */
+    private static Intent linkIntent(Context context, String link, String pkg) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        intent.setPackage(pkg);
+        if (context.getPackageManager().resolveActivity(intent, 0) == null) {
+            intent.setPackage(null);
+        }
+        return intent;
+    }
+
+    private static Intent appIntent(Context context, String[] candidates) {
         PackageManager pm = context.getPackageManager();
         Intent intent = null;
         for (String pkg : candidates) {
@@ -41,8 +62,6 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
             // App not installed: open its Play Store page instead.
             intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + candidates[0]));
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        return PendingIntent.getActivity(context, requestCode, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        return intent;
     }
 }

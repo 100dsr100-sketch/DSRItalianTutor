@@ -20,7 +20,7 @@ gold icon and label. Both come in the one APK.
 
 | Tile      | Opens                               | Package                                                        |
 |-----------|-------------------------------------|----------------------------------------------------------------|
-| Claude    | Claude                              | `com.anthropic.claude`                                         |
+| Claude    | Claude Code (claude.ai/code)        | `com.anthropic.claude`                                         |
 | Duolingo  | Duolingo                            | `com.duolingo`                                                 |
 | Clock     | Samsung Clock (else Google Clock)   | `com.sec.android.app.clockpackage`, `com.google.android.deskclock` |
 | Calc      | Samsung Calculator (else Google)    | `com.sec.android.app.popupcalculator`, `com.google.android.calculator` |
@@ -28,7 +28,9 @@ gold icon and label. Both come in the one APK.
 | Anker     | Anker Soundcore                     | `com.oceanwing.soundcore`                                      |
 | Plex      | Plex                                | `com.plexapp.android`                                          |
 
-If an app isn't installed, its tile opens the Play Store page for it.
+If an app isn't installed, its tile opens the Play Store page for it. The
+Claude tile opens claude.ai/code in the Claude app if the app handles that
+link, otherwise in the browser.
 
 ![preview](preview.png)
 

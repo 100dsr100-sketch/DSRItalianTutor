@@ -1,6 +1,6 @@
 package com.dsr.appswidget;
 
-/** DSR Apps 2: Claude, Duolingo, Clock, Calculator, Translate, Soundcore, Plex. */
+/** DSR Apps 2: Claude Code, Duolingo, Clock, Calculator, Translate, Soundcore, Plex. */
 public class AppsWidget2Provider extends BaseAppsWidget {
 
     @Override
@@ -28,5 +28,11 @@ public class AppsWidget2Provider extends BaseAppsWidget {
                 {"com.oceanwing.soundcore"},
                 {"com.plexapp.android"},
         };
+    }
+
+    @Override
+    protected String[] links() {
+        // Claude tile goes straight to Claude Code.
+        return new String[] {"https://claude.ai/code", null, null, null, null, null, null};
     }
 }
