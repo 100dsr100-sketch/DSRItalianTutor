@@ -17,7 +17,9 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
     protected abstract int[] tiles();
 
     /** Per tile: candidate packages, in order of preference. */
-    protected abstract String[][] packages();
+    protected String[][] packages() {
+        return null;
+    }
 
     /** Per tile: optional https link to open (in the tile's app if it handles it), or null. */
     protected String[] links() {
@@ -28,17 +30,20 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager manager, int[] widgetIds) {
         RemoteViews views = new RemoteViews(context.getPackageName(), layout());
         int[] tiles = tiles();
-        String[][] packages = packages();
-        String[] links = links();
         for (int i = 0; i < tiles.length; i++) {
-            Intent intent = links[i] != null
-                    ? linkIntent(context, links[i], packages[i][0])
-                    : appIntent(context, packages[i]);
+            Intent intent = tileIntent(context, i);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             views.setOnClickPendingIntent(tiles[i], PendingIntent.getActivity(context, tiles[i], intent,
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE));
         }
         manager.updateAppWidget(widgetIds, views);
+    }
+
+    /** What tapping tile {@code i} launches. Defaults to {@link #packages()} and {@link #links()}. */
+    protected Intent tileIntent(Context context, int i) {
+        String link = links()[i];
+        String[] candidates = packages()[i];
+        return link != null ? linkIntent(context, link, candidates[0]) : appIntent(context, candidates);
     }
 
     /** Opens the link in the given app if it can handle it, otherwise in the browser. */

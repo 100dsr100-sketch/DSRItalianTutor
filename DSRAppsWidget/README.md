@@ -1,6 +1,6 @@
 # DSR Apps widgets
 
-Three home-screen widgets for the Galaxy S22 Ultra in the same style as the DSR
+Four home-screen widgets for the Galaxy S22 Ultra in the same style as the DSR
 power switch: a gold outlined rounded frame with seven dark tiles, each with a
 gold icon and label. Both come in the one APK.
 
@@ -40,6 +40,22 @@ gold icon and label. Both come in the one APK.
 | Messenger | Messenger        | `com.facebook.orca`                      |
 | Greater   | Greater Bank     | `com.greater.Greater`                    |
 
+### DSR Apps 4
+
+The DSR web apps have no fixed package name, so each tile looks the app up by
+its home-screen name when tapped (exact name first, then "starts with"), and
+falls back to the GitHub Pages address.
+
+| Tile      | Looks for                             | Fallback                                   |
+|-----------|---------------------------------------|--------------------------------------------|
+| Travel    | "DSR Travelc…"                        | —                                          |
+| Dictation | "Dictation", "DSR Dictation"          | 100dsr100-sketch.github.io/DSRDictation/   |
+| Media     | "DSR Media", "DSR Online Media…"      | 100dsr100-sketch.github.io/DSROnlineMediaApp/ |
+| Research  | "DSR Researcher"                      | 100dsr100-sketch.github.io/DSRResearcher/  |
+| Sound     | "DSR Sound…"                          | —                                          |
+| Journal   | "DSR Travel Journal", "DSR Journal"   | 100dsr100-sketch.github.io/DSRTravelJournal/ |
+| Notes     | "DSR Notes"                           | 100dsr100-sketch.github.io/DSRNotes/       |
+
 If an app isn't installed, its tile opens the Play Store page for it. The
 Claude tile opens claude.ai/code in the Claude app if the app handles that
 link, otherwise in the browser.
@@ -52,7 +68,7 @@ link, otherwise in the browser.
    and download `DSR-Apps-Widget.apk` (rebuilt by GitHub Actions on every push
    that touches this folder).
 2. Open the APK and allow "Install unknown apps" for your browser when asked.
-3. Long-press an empty spot on the home screen → **Widgets** → **DSR Apps** (or **DSR Apps 2** / **3**),
+3. Long-press an empty spot on the home screen → **Widgets** → **DSR Apps** (or **DSR Apps 2** / **3** / **4**),
    and drag it onto the screen. It fills the full width (5 columns) by 1 row and can be resized.
 
 ## Build locally

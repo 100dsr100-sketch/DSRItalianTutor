@@ -6,5 +6,7 @@
     <string name="widget_2_description">Claude, Duolingo, Clock, Calculator, Translate, Soundcore and Plex</string>
     <string name="widget_3_name">DSR Apps 3</string>
     <string name="widget_3_description">CommBank, Binance, CommSec, Macquarie, Pocket, Messenger and Greater Bank</string>
-    <string name="info_text">To add the widget:\n\n1. Long-press an empty spot on your home screen\n2. Tap Widgets\n3. Find DSR Apps (or DSR Apps 2 / 3) and drag it onto the screen</string>
+    <string name="widget_4_name">DSR Apps 4</string>
+    <string name="widget_4_description">DSR Travel, Dictation, Media, Researcher, Sound, Travel Journal and Notes</string>
+    <string name="info_text">To add the widget:\n\n1. Long-press an empty spot on your home screen\n2. Tap Widgets\n3. Find DSR Apps (or DSR Apps 2 / 3 / 4) and drag it onto the screen</string>
 </resources>
