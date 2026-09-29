@@ -1,66 +1,51 @@
 # DSR Apps widgets
 
-Four home-screen widgets for the Galaxy S22 Ultra in the same style as the DSR
-power switch: a gold outlined rounded frame with seven dark tiles, each with a
-gold icon and label. Both come in the one APK.
-
-### DSR Apps
-
-| Tile    | Opens                  | Package                          |
-|---------|------------------------|----------------------------------|
-| Keep    | Google Keep            | `com.google.android.keep`        |
-| Drive   | Google Drive           | `com.google.android.apps.docs`   |
-| Photos  | Google Photos          | `com.google.android.apps.photos` |
-| Gallery | Samsung Gallery        | `com.sec.android.gallery3d`      |
-| Music   | Samsung Music          | `com.sec.android.app.music`      |
-| Health  | Samsung Health         | `com.sec.android.app.shealth`    |
-| Files   | Samsung My Files       | `com.sec.android.app.myfiles`    |
-
-### DSR Apps 2
-
-| Tile      | Opens                               | Package                                                        |
-|-----------|-------------------------------------|----------------------------------------------------------------|
-| Claude    | Claude Code (claude.ai/code)        | `com.anthropic.claude`                                         |
-| Duolingo  | Duolingo                            | `com.duolingo`                                                 |
-| Clock     | Samsung Clock (else Google Clock)   | `com.sec.android.app.clockpackage`, `com.google.android.deskclock` |
-| Calc      | Samsung Calculator (else Google)    | `com.sec.android.app.popupcalculator`, `com.google.android.calculator` |
-| Translate | Google Translate                    | `com.google.android.apps.translate`                            |
-| Anker     | Anker Soundcore                     | `com.oceanwing.soundcore`                                      |
-| Plex      | Plex                                | `com.plexapp.android`                                          |
-
-### DSR Apps 3
-
-| Tile      | Opens            | Package                                  |
-|-----------|------------------|------------------------------------------|
-| CommBank  | CommBank         | `com.commbank.netbank`                   |
-| Binance   | Binance          | `com.binance.dev`                        |
-| CommSec   | CommSec          | `au.com.commsec.android.CommSec`         |
-| Macquarie | Macquarie Mobile Banking | `au.com.macquarie.banking`       |
-| Pocket    | CommSec Pocket   | `au.com.commsec.android.CommSecPocket`   |
-| Messenger | Messenger        | `com.facebook.orca`                      |
-| Greater   | Greater Bank     | `com.greater.Greater`                    |
-
-### DSR Apps 4
-
-The DSR web apps have no fixed package name, so each tile looks the app up by
-its home-screen name when tapped (exact name first, then "starts with"), and
-falls back to the GitHub Pages address.
-
-| Tile      | Looks for                             | Fallback                                   |
-|-----------|---------------------------------------|--------------------------------------------|
-| Travel    | "DSR Travelc…"                        | —                                          |
-| Dictation | "Dictation", "DSR Dictation"          | 100dsr100-sketch.github.io/DSRDictation/   |
-| Media     | "DSR Media", "DSR Online Media…"      | 100dsr100-sketch.github.io/DSROnlineMediaApp/ |
-| Research  | "DSR Researcher"                      | 100dsr100-sketch.github.io/DSRResearcher/  |
-| Sound     | "DSR Sound…"                          | —                                          |
-| Journal   | "DSR Travel Journal", "DSR Journal"   | 100dsr100-sketch.github.io/DSRTravelJournal/ |
-| Notes     | "DSR Notes"                           | 100dsr100-sketch.github.io/DSRNotes/       |
-
-If an app isn't installed, its tile opens the Play Store page for it. The
-Claude tile opens claude.ai/code in the Claude app if the app handles that
-link, otherwise in the browser.
+Home-screen app launcher widgets for the Galaxy S22 Ultra in the same style as
+the DSR power switch: a gold outlined rounded frame with a row of dark tiles,
+each with an icon and label. Four widgets come in the one APK (**DSR Apps**,
+**DSR Apps 2**, **3** and **4**); they differ only in their starting apps.
 
 ![preview](preview.png)
+
+## Settings
+
+Each widget has its own settings (opened when you add it, by long-pressing it
+and tapping **Settings**, or by tapping an empty tile):
+
+- **Icons per row**: 5 to 10 (default 7).
+- **Icon colour**: **Gold** or **App colours**. Gold uses a hand-drawn icon for
+  the apps below; for any other app it uses the app's Android 13+ themed-icon
+  layer when it has one, otherwise a gold version made from the app's icon.
+- **Apps**: tap a slot to pick from every installed app (web apps installed
+  from Chrome included) or leave it empty; ▲ moves a slot up.
+
+## Starting apps
+
+| Widget     | Tiles |
+|------------|-------|
+| DSR Apps   | Keep, Drive, Photos, Samsung Gallery, Samsung Music, Samsung Health, My Files |
+| DSR Apps 2 | Claude (opens Claude Code, claude.ai/code), Duolingo, Clock, Calculator, Translate, Anker Soundcore, Plex |
+| DSR Apps 3 | CommBank, Binance, CommSec, Macquarie, CommSec Pocket, Messenger, Greater Bank |
+| DSR Apps 4 | DSR Travel…, Dictation, DSR Media, DSR Researcher, DSR Sound…, DSR Travel Journal, DSR Notes |
+
+The DSR web apps have no fixed package name, so DSR Apps 4 finds them by
+home-screen name when the widget is first set up, and otherwise opens their
+GitHub Pages address. Apps that aren't installed open their Play Store page.
+
+## Battery and memory
+
+The widgets are designed to cost nothing while they sit on the home screen:
+
+- No update timer (`updatePeriodMillis="0"`), no services, alarms, wake locks,
+  background listeners, network access or permissions.
+- The widget is drawn only when it is added, its settings are saved, or the
+  APK is updated. The home screen keeps the result; this app's process is not
+  running the rest of the time.
+- Taps are pending intents that the home screen fires straight at the target
+  app, without starting this app.
+- Built-in gold icons and apps' own icons are sent as resource references, so
+  no image data is copied; only generated gold icons are small bitmaps.
+- No libraries (plain Android framework); the APK is under 100 KB.
 
 ## Install
 
@@ -68,8 +53,8 @@ link, otherwise in the browser.
    and download `DSR-Apps-Widget.apk` (rebuilt by GitHub Actions on every push
    that touches this folder).
 2. Open the APK and allow "Install unknown apps" for your browser when asked.
-3. Long-press an empty spot on the home screen → **Widgets** → **DSR Apps** (or **DSR Apps 2** / **3** / **4**),
-   and drag it onto the screen. It fills the full width (5 columns) by 1 row and can be resized.
+3. Long-press an empty spot on the home screen → **Widgets** → **DSR Apps**,
+   and drag a widget onto the screen.
 
 ## Build locally
 
