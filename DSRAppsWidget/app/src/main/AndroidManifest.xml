@@ -19,6 +19,13 @@
         <package android:name="com.google.android.apps.translate" />
         <package android:name="com.oceanwing.soundcore" />
         <package android:name="com.plexapp.android" />
+        <package android:name="com.commbank.netbank" />
+        <package android:name="com.binance.dev" />
+        <package android:name="au.com.commsec.android.CommSec" />
+        <package android:name="au.com.macquarie.banking" />
+        <package android:name="au.com.commsec.android.CommSecPocket" />
+        <package android:name="com.facebook.orca" />
+        <package android:name="com.greater.Greater" />
     </queries>
 
     <application
@@ -57,6 +64,18 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/apps_widget_2_info" />
+        </receiver>
+
+        <receiver
+            android:name=".AppsWidget3Provider"
+            android:label="@string/widget_3_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/apps_widget_3_info" />
         </receiver>
     </application>
 </manifest>

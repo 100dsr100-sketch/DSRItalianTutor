@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_frame"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/tile_commbank"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_commbank" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="CommBank" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_binance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_binance" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Binance" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_commsec"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_commsec" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="CommSec" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_macquarie"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_macquarie" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Macquarie" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_pocket"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_pocket" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Pocket" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_messenger"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_messenger" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Messenger" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_greater"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/tile_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_greater" />
+
+            <TextView
+                style="@style/TileLabel"
+                android:text="Greater" />
+        </LinearLayout>
+</LinearLayout>
