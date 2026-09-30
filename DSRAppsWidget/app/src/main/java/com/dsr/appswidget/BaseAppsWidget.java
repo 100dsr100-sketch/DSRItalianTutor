@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.widget.RemoteViews;
@@ -19,7 +20,10 @@ import android.widget.RemoteViews;
  */
 public abstract class BaseAppsWidget extends AppWidgetProvider {
 
-    static final int ICON_DP = 26;
+    private static final int GOLD = 0xFFE8B830;
+
+    /** Size generated icons are drawn at: about the largest a tile shows them. */
+    static final int ICON_DP = 44;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager manager, int[] widgetIds) {
@@ -44,9 +48,13 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
             WidgetConfig.Entry e = config.entries[i];
             RemoteViews tile = new RemoteViews(pkg, R.layout.tile);
             int builtIn = e == null ? 0 : icons.builtInResource(e, config.gold);
-            Icon icon = e == null || builtIn != 0 ? null : icons.icon(e, config.gold);
+            Bitmap mask = e == null || builtIn != 0 || !config.gold ? null : icons.goldMask(e);
+            Icon icon = e == null || builtIn != 0 || config.gold ? null : icons.icon(e, false);
             if (builtIn != 0) {
                 tile.setImageViewResource(R.id.icon, builtIn);
+            } else if (mask != null) {
+                tile.setImageViewBitmap(R.id.icon, mask);
+                tile.setInt(R.id.icon, "setColorFilter", GOLD);
             } else if (icon != null) {
                 tile.setImageViewIcon(R.id.icon, icon);
             } else {

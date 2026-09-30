@@ -16,11 +16,16 @@
             android:layout_margin="3dp"
             android:background="@drawable/tile_bg"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="3dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:scaleType="fitCenter"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_travelc" />
 
@@ -37,11 +42,16 @@
             android:layout_margin="3dp"
             android:background="@drawable/tile_bg"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="3dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:scaleType="fitCenter"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_dictation" />
 
@@ -58,11 +68,16 @@
             android:layout_margin="3dp"
             android:background="@drawable/tile_bg"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="3dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:scaleType="fitCenter"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_media" />
 
@@ -79,11 +94,16 @@
             android:layout_margin="3dp"
             android:background="@drawable/tile_bg"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="3dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:scaleType="fitCenter"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_research" />
 
@@ -100,11 +120,16 @@
             android:layout_margin="3dp"
             android:background="@drawable/tile_bg"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="3dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:scaleType="fitCenter"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_sound" />
 
@@ -121,11 +146,16 @@
             android:layout_margin="3dp"
             android:background="@drawable/tile_bg"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="3dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:scaleType="fitCenter"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_journal" />
 
@@ -142,11 +172,16 @@
             android:layout_margin="3dp"
             android:background="@drawable/tile_bg"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="3dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="4dp"
+                android:scaleType="fitCenter"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_notes" />
 

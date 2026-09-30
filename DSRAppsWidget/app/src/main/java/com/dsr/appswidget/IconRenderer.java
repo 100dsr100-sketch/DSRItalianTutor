@@ -39,6 +39,18 @@ final class IconRenderer {
         return gold || appIconResource(e) == 0 ? builtIn : 0;
     }
 
+    /**
+     * Gold version of an app with no built-in icon, as a one-byte-per-pixel shape for the
+     * widget to tint gold (a quarter of the size of a colour bitmap), or null.
+     */
+    Bitmap goldMask(WidgetConfig.Entry e) {
+        Bitmap bitmap = render(e, true);
+        if (bitmap == null) return null;
+        Bitmap mask = bitmap.extractAlpha();
+        bitmap.recycle();
+        return mask;
+    }
+
     /** Null if there is nothing to show (app not installed and no built-in icon). */
     Icon icon(WidgetConfig.Entry e, boolean gold) {
         int builtIn = Icons.drawable(e.icon);
