@@ -85,9 +85,10 @@ final class IconRenderer {
     private int appIconResource(WidgetConfig.Entry e) {
         if (e.pkg == null) return 0;
         try {
-            return e.cls != null
-                    ? pm.getActivityInfo(new ComponentName(e.pkg, e.cls), 0).getIconResource()
-                    : pm.getApplicationInfo(e.pkg, 0).icon;
+            if (e.cls != null && WidgetConfig.activityExists(pm, e.pkg, e.cls)) {
+                return pm.getActivityInfo(new ComponentName(e.pkg, e.cls), 0).getIconResource();
+            }
+            return pm.getApplicationInfo(e.pkg, 0).icon;
         } catch (PackageManager.NameNotFoundException notInstalled) {
             return 0;
         }
@@ -96,7 +97,7 @@ final class IconRenderer {
     private Drawable appIcon(WidgetConfig.Entry e) {
         if (e.pkg == null) return null;
         try {
-            return e.cls != null
+            return e.cls != null && WidgetConfig.activityExists(pm, e.pkg, e.cls)
                     ? pm.getActivityIcon(new ComponentName(e.pkg, e.cls))
                     : pm.getApplicationIcon(e.pkg);
         } catch (PackageManager.NameNotFoundException notInstalled) {

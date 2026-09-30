@@ -8,10 +8,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.widget.RemoteViews;
+
+import java.util.List;
 
 /**
  * A row of 5-10 app tiles. All the work happens in {@link #update}, which runs only when the
@@ -70,6 +73,24 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
         manager.updateAppWidget(widgetId, root);
     }
 
+    /** Opens the app's home-screen entry, or null if the app isn't installed. */
+    private static Intent launcherIntent(Context context, PackageManager pm, WidgetConfig.Entry e) {
+        Intent launcher = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+                .setPackage(e.pkg);
+        List<ResolveInfo> entries = pm.queryIntentActivities(launcher, 0);
+        if (entries.isEmpty()) return null;
+        String cls = e.cls != null && WidgetConfig.activityExists(pm, e.pkg, e.cls)
+                ? e.cls : entries.get(0).activityInfo.name;
+        int allEntries = pm.queryIntentActivities(launcher, PackageManager.MATCH_DISABLED_COMPONENTS).size();
+        if (allEntries > entries.size()) {
+            // The app has switched-off home-screen entries it can swap in (Duolingo does this for
+            // its seasonal icons), which can happen without the widget being redrawn. Such tiles
+            // look up the app's current entry when tapped.
+            return LaunchActivity.intent(context, e.pkg, cls);
+        }
+        return new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setClassName(e.pkg, cls);
+    }
+
     private static Intent tapIntent(Context context, WidgetConfig.Entry e, int widgetId) {
         PackageManager pm = context.getPackageManager();
         Intent intent = null;
@@ -85,14 +106,9 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
                 }
             }
         } else if (e != null && e.pkg != null) {
-            if (e.cls != null && exists(pm, e.pkg, e.cls)) {
-                intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-                        .setClassName(e.pkg, e.cls);
-            } else {
-                intent = pm.getLaunchIntentForPackage(e.pkg);
-                if (intent == null) {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + e.pkg));
-                }
+            intent = launcherIntent(context, pm, e);
+            if (intent == null) {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + e.pkg));
             }
         }
         if (intent == null) {
@@ -100,14 +116,5 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
             intent = ConfigActivity.intent(context, widgetId);
         }
         return intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-    }
-
-    private static boolean exists(PackageManager pm, String pkg, String cls) {
-        try {
-            pm.getActivityInfo(new ComponentName(pkg, cls), 0);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
     }
 }

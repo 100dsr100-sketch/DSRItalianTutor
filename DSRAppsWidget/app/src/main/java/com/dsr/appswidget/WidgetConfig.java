@@ -53,8 +53,39 @@ final class WidgetConfig {
         if (config == null) {
             config = fromPreset(context, Presets.forProvider(provider));
             config.save(context, widgetId);
+        } else if (config.followMovedApps(context)) {
+            config.save(context, widgetId);
         }
         return config;
+    }
+
+    /**
+     * Some apps (Duolingo, for its seasonal icons) switch which of their launcher entries is
+     * enabled; an app not found at setup may have been installed since. Points such tiles at
+     * the app's current launcher entry. Returns true if anything changed.
+     */
+    private boolean followMovedApps(Context context) {
+        PackageManager pm = context.getPackageManager();
+        boolean changed = false;
+        for (Entry e : entries) {
+            if (e == null || e.pkg == null || e.url != null) continue;
+            if (e.cls != null && activityExists(pm, e.pkg, e.cls)) continue;
+            Intent launch = pm.getLaunchIntentForPackage(e.pkg);
+            if (launch == null || launch.getComponent() == null) continue; // not installed
+            e.cls = launch.getComponent().getClassName();
+            changed = true;
+        }
+        return changed;
+    }
+
+    /** False if the activity is gone or disabled. */
+    static boolean activityExists(PackageManager pm, String pkg, String cls) {
+        try {
+            pm.getActivityInfo(new ComponentName(pkg, cls), 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
     private static WidgetConfig load(Context context, int widgetId) {
