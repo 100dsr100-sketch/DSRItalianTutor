@@ -32,7 +32,7 @@ final class Presets {
     static Tile[] forProvider(String className) {
         if (className.endsWith("AppsWidget2Provider")) {
             return new Tile[] {
-                    new Tile("Claude", "claude", "https://claude.ai/code", new String[] {"com.anthropic.claude"}),
+                    new Tile("Claude", "claude", WidgetConfig.CLAUDE_CODE, new String[] {WidgetConfig.CLAUDE}),
                     app("Duolingo", "duolingo", "com.duolingo"),
                     app("Clock", "clock", "com.sec.android.app.clockpackage", "com.google.android.deskclock"),
                     app("Calc", "calculator", "com.sec.android.app.popupcalculator", "com.google.android.calculator"),

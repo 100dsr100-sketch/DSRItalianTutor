@@ -24,7 +24,7 @@ and tapping **Settings**, or by tapping an empty tile):
 | Widget     | Tiles |
 |------------|-------|
 | DSR Apps   | Keep, Drive, Photos, Samsung Gallery, Samsung Music, Samsung Health, My Files |
-| DSR Apps 2 | Claude (opens Claude Code, claude.ai/code), Duolingo, Clock, Calculator, Translate, Anker Soundcore, Plex |
+| DSR Apps 2 | Claude (opens the Claude app's Code tab, `claude://code`), Duolingo, Clock, Calculator, Translate, Anker Soundcore, Plex |
 | DSR Apps 3 | CommBank, Binance, CommSec, Macquarie, CommSec Pocket, Messenger, Greater Bank |
 | DSR Apps 4 | DSR Travel…, Dictation, DSR Media, DSR Researcher, DSR Sound…, DSR Travel Journal, DSR Notes |
 

@@ -68,9 +68,13 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
         if (e != null && e.url != null) {
             intent = new Intent(Intent.ACTION_VIEW, Uri.parse(e.url));
             if (e.pkg != null) {
-                // Open the link inside its app if the app handles it, otherwise in the browser.
+                // Open the link inside its app if the app handles it. Otherwise open a web link
+                // in the browser, or just open the app (e.g. claude:// on an older Claude app).
                 intent.setPackage(e.pkg);
-                if (pm.resolveActivity(intent, 0) == null) intent.setPackage(null);
+                if (pm.resolveActivity(intent, 0) == null) {
+                    boolean web = e.url.startsWith("http");
+                    intent = web ? intent.setPackage(null) : pm.getLaunchIntentForPackage(e.pkg);
+                }
             }
         } else if (e != null && e.pkg != null) {
             if (e.cls != null && exists(pm, e.pkg, e.cls)) {

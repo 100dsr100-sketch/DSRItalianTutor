@@ -18,6 +18,12 @@ final class WidgetConfig {
 
     private static final String PREFS = "widgets";
 
+    static final String CLAUDE = "com.anthropic.claude";
+    /** Opens the Claude app's Code tab on the list of sessions. */
+    static final String CLAUDE_CODE = "claude://code";
+    /** Before v2.1 the Claude tile used this, which opens a new session instead. */
+    private static final String OLD_CLAUDE_CODE = "https://claude.ai/code";
+
     /** What a tile opens. Exactly one of cls (an app screen) or url is normally set. */
     static final class Entry {
         String pkg;   // app package, may be null for a plain web link
@@ -32,6 +38,7 @@ final class WidgetConfig {
             e.cls = cls;
             e.label = shortLabel(label);
             e.icon = Icons.keyFor(pkg, label);
+            if (CLAUDE.equals(pkg)) e.url = CLAUDE_CODE; // Claude tiles open Claude Code
             return e;
         }
     }
@@ -65,6 +72,7 @@ final class WidgetConfig {
             e.pkg = orNull(f[0]);
             e.cls = orNull(f[1]);
             e.url = orNull(f[2]);
+            if (OLD_CLAUDE_CODE.equals(e.url)) e.url = CLAUDE_CODE;
             e.label = orNull(f[3]);
             e.icon = orNull(f[4]);
             config.entries[i] = e;
