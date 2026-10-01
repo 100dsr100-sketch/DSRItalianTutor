@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tile for Android 12+: the icon is sized to fit in code, and the label is centred in the
+     space between the bottom of the icon and the bottom of the tile. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tile"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:layout_margin="3dp"
+    android:background="@drawable/tile_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingBottom="3dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/TileLabel"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="0dp" />
+</LinearLayout>

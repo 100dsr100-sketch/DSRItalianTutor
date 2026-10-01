@@ -12,6 +12,9 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import java.util.List;
@@ -34,6 +37,29 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
     }
 
     @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager manager, int widgetId,
+            Bundle newOptions) {
+        update(context, manager, widgetId); // resized: refit the icons
+    }
+
+    /**
+     * Icon size in dp that fits a tile of this widget, or 0 to use the stretchy layout (Android
+     * before 12, or the home screen hasn't reported the widget's size).
+     */
+    private static float fittedIconDp(AppWidgetManager manager, int widgetId, int count) {
+        if (Build.VERSION.SDK_INT < 31) return 0;
+        Bundle size = manager.getAppWidgetOptions(widgetId);
+        // In portrait a widget is its minimum width by its maximum height.
+        int width = size.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        int height = size.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+        if (width <= 0 || height <= 0) return 0;
+        float tileWidth = (width - 10f) / count - 6f;   // frame padding, tile margins
+        float tileHeight = height - 10f - 6f;
+        float icon = Math.min(tileWidth - 8f, tileHeight - 8f - 18f); // tile padding, label space
+        return icon >= 16f ? icon : 0;
+    }
+
+    @Override
     public void onDeleted(Context context, int[] widgetIds) {
         for (int id : widgetIds) WidgetConfig.delete(context, id);
     }
@@ -45,11 +71,17 @@ public abstract class BaseAppsWidget extends AppWidgetProvider {
         IconRenderer icons = new IconRenderer(context, ICON_DP);
         String pkg = context.getPackageName();
 
+        float iconDp = fittedIconDp(manager, widgetId, config.count);
+
         RemoteViews root = new RemoteViews(pkg, R.layout.widget_root);
         root.removeAllViews(R.id.row);
         for (int i = 0; i < config.count; i++) {
             WidgetConfig.Entry e = config.entries[i];
-            RemoteViews tile = new RemoteViews(pkg, R.layout.tile);
+            RemoteViews tile = new RemoteViews(pkg, iconDp > 0 ? R.layout.tile_fit : R.layout.tile);
+            if (iconDp > 0) {
+                tile.setViewLayoutWidth(R.id.icon, iconDp, TypedValue.COMPLEX_UNIT_DIP);
+                tile.setViewLayoutHeight(R.id.icon, iconDp, TypedValue.COMPLEX_UNIT_DIP);
+            }
             int builtIn = e == null ? 0 : icons.builtInResource(e, config.gold);
             Bitmap mask = e == null || builtIn != 0 || !config.gold ? null : icons.goldMask(e);
             Icon icon = e == null || builtIn != 0 || config.gold ? null : icons.icon(e, false);
