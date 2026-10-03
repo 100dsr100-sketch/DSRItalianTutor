@@ -26,6 +26,7 @@ and tapping **Settings**, or by tapping an empty tile):
 | DSR Apps   | Keep, Drive, Photos, Samsung Gallery, Samsung Music, Samsung Health, My Files |
 | DSR Apps 2 | Claude (opens the Claude app's Code tab, `claude://code`), Duolingo, Clock, Calculator, Translate, Anker Soundcore, Plex |
 | DSR Apps 3 | CommBank, Binance, CommSec, Macquarie, CommSec Pocket, Messenger, Greater Bank |
+| DSR Apps (empty) | Nothing – every tile starts empty; add it as many times as you like and fill each one from its settings |
 | DSR Apps 4 | DSR Travel…, Dictation, DSR Media, DSR Researcher, DSR Sound…, DSR Travel Journal, DSR Notes |
 
 The DSR web apps have no fixed package name, so DSR Apps 4 finds them by

@@ -72,6 +72,18 @@
                 android:resource="@xml/apps_widget_4_info" />
         </receiver>
 
+        <receiver
+            android:name=".AppsWidgetEmptyProvider"
+            android:label="@string/widget_empty_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/apps_widget_empty_info" />
+        </receiver>
+
         <activity
             android:name=".LaunchActivity"
             android:excludeFromRecents="true"

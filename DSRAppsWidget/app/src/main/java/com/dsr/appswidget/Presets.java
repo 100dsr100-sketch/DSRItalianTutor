@@ -30,6 +30,7 @@ final class Presets {
     private static final String PAGES = "https://100dsr100-sketch.github.io/";
 
     static Tile[] forProvider(String className) {
+        if (className.endsWith("AppsWidgetEmptyProvider")) return new Tile[0];   // all tiles empty
         if (className.endsWith("AppsWidget2Provider")) {
             return new Tile[] {
                     new Tile("Claude", "claude", WidgetConfig.CLAUDE_CODE, new String[] {WidgetConfig.CLAUDE}),
